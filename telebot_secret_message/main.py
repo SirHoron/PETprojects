@@ -1,5 +1,17 @@
 from telebot import TeleBot
 from cache import cache
+import socket
+
+
+try:
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.connect(("127.0.0.1", 12345))
+    print("[Command log] Подключение установлено")
+except Exception as e:
+    print(e, "\n",
+        f"{"---"*40}", "\n"
+        "[Command log] Проверьте подключение контроллера")
+    __name__ = "None"
 
 bot = TeleBot("8403549969:AAGRdJvDRD5C8slSlMD2uzTaSwntu3MgHJw")
 
@@ -9,7 +21,7 @@ class Commands:
     def send(self, reqv):
         message = f"""*Тебе анонимно написали:*
     {reqv.text}"""
-        bot.send_message(cache.get(CommandOfId[reqv.chat.id][1]), message, parse_mode="Markdown")
+        bot.send_message(cache.get(CommandOfId[reqv.chat.id][1])[2], message, parse_mode="Markdown")
         CommandOfId.pop(reqv.chat.id)
 cmd = Commands()
 
@@ -43,9 +55,10 @@ def send(reqv):
 
 @bot.message_handler(content_types=["text"])
 def handler_message(reqv):
-    try:
+    if reqv.chat.id in CommandOfId.keys():
         CommandOfId[reqv.chat.id][0](reqv)
-    except KeyError:
-        pass
 
-bot.polling(non_stop=True, interval=0)
+if __name__ == "__main__":
+    bot.polling(non_stop=True, interval=0)
+    server.close()
+    print("The bot has completed its work")
