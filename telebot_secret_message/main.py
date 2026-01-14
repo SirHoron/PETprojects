@@ -1,12 +1,13 @@
 from telebot import TeleBot
-from cache import cache
 import socket
-
+from uuid import uuid4
+import asyncio
 
 try:
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.connect(("127.0.0.1", 12345))
+    client = socket.socket()
+    client.connect(("127.0.0.1", 56237))
     print("[Command log] Подключение установлено")
+    client.send(b"main")
 except Exception as e:
     print(e, "\n",
         f"{"---"*40}", "\n"
@@ -17,14 +18,35 @@ bot = TeleBot("8403549969:AAGRdJvDRD5C8slSlMD2uzTaSwntu3MgHJw")
 
 CommandOfId: dict[list] = {}
 
+def get(key):
+    client.send(f"cache/get/{key}/{uuid4()}".encode())
+    while True:
+        data = client.recv(1024).decode().split('/')
+        if data:
+            try:
+                if data != "None":
+                    data = data[0].split('|')
+                    data[2] = int(data[2])
+                    return data
+            except IndexError:
+                print(data)
+                return None
+        
+
+def check(name):
+    answ = {"True": True, "False": False}
+    client.send(f"cache/check/{name}/{uuid4()}".encode())
+    while True:
+        data = client.recv(1024).decode().split('/')
+        if data:
+            return answ[data[0]]
 class Commands:
     def send(self, reqv):
         message = f"""*Тебе анонимно написали:*
     {reqv.text}"""
-        bot.send_message(cache.get(CommandOfId[reqv.chat.id][1])[2], message, parse_mode="Markdown")
+        bot.send_message(get(CommandOfId[reqv.chat.id][1])[2], message, parse_mode="Markdown")
         CommandOfId.pop(reqv.chat.id)
 cmd = Commands()
-
 
 @bot.message_handler(commands=["start"])
 def start(reqv):
@@ -47,7 +69,7 @@ def help(reqv):
 def send(reqv):
     global CommandOfId
     name = reqv.text[6:]
-    if cache.check(name):
+    if check(name):
         bot.send_message(reqv.chat.id, """Напишите сообщение, которое хотите отправить""")
         CommandOfId.update({reqv.chat.id: [cmd.send, f"{name}"]})
     else:
@@ -60,5 +82,5 @@ def handler_message(reqv):
 
 if __name__ == "__main__":
     bot.polling(non_stop=True, interval=0)
-    server.close()
+    client.close()
     print("The bot has completed its work")
