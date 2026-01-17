@@ -23,14 +23,11 @@ def get(key):
     while True:
         data = client.recv(1024).decode().split('/')
         if data:
-            try:
-                if data != "None":
-                    data = data[0].split('|')
-                    data[2] = int(data[2])
-                    return data
-            except IndexError:
-                print(data)
-                return None
+            print(data)
+            if data != "None" and len(data) == 3:
+                data = data[0].split('|')
+                data[2] = int(data[2])
+                return data
         
 
 def check(name):
@@ -39,17 +36,23 @@ def check(name):
     while True:
         data = client.recv(1024).decode().split('/')
         if data:
+            print(data)
             return answ[data[0]]
+        
 class Commands:
     def send(self, reqv):
+        print(reqv.text)
         message = f"""*Тебе анонимно написали:*
     {reqv.text}"""
-        bot.send_message(get(CommandOfId[reqv.chat.id][1])[2], message, parse_mode="Markdown")
+        data = get(CommandOfId[reqv.chat.id][1])
+        print(data)
+        bot.send_message(data[2], message, parse_mode="Markdown")
         CommandOfId.pop(reqv.chat.id)
 cmd = Commands()
 
 @bot.message_handler(commands=["start"])
 def start(reqv):
+    print("gfv")
     bot.send_message(reqv.chat.id,
 """Приветствую Вас, я тестовый бот.
 Я буду выполнять различные задачи, и для того чтобы узнать
@@ -59,19 +62,32 @@ def start(reqv):
 def help(reqv):
     message = """
 Данный бот предназначен для анонимной отправки сообщений.
-Чтобы отправить сообщение Вам нужно ввести '/send username или псевдоним',
+Перед тем как начать общение Вам понадобиться псевдоним, под которым вы будете общаться.
+Чтобы задать псевдоним воспользуйтесь командой '/NewName псевдоним'.
+Чтобы отправлять сообщения Вам нужно ввести '/send username или псевдоним',
 после вам нужно будет написать сообщение которое вы хотите отправить"""
     if reqv.chat.username == "mrsnowcats_kote":
         message = """Ну привет, Влад. Хуй тебе, а не инфа."""
     bot.send_message(reqv.chat.id, message)
+
+@bot.message_handler(commands=["NewName"])
+def NewName(reqv):
+    name: str = reqv.text[7:].strip()
+    if not check(name):
+        pass
+    else:
+        bot.send_message(reqv.chat.id, """Такой псевдоним уже существует, введите команду вновь с другим именем""")
 
 @bot.message_handler(commands=["send"])
 def send(reqv):
     global CommandOfId
     name = reqv.text[6:]
     if check(name):
-        bot.send_message(reqv.chat.id, """Напишите сообщение, которое хотите отправить""")
-        CommandOfId.update({reqv.chat.id: [cmd.send, f"{name}"]})
+        if check(reqv.chat.username):
+            bot.send_message(reqv.chat.id, """Напишите сообщение, которое хотите отправить""")
+            CommandOfId.update({reqv.chat.id: [cmd.send, f"{name}"]})
+        else:
+            bot.send_message(reqv.chat.id,"""Перед тем как пользаваться ботом придумайте себе псевдоним командой '/NewName псевдоним'.""")    
     else:
         bot.send_message(reqv.chat.id, """Данный пользователь не зарегистрирован в боте. Проверьте правильность набора имени пользователя.""")
 
