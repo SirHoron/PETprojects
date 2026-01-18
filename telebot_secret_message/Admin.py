@@ -1,9 +1,11 @@
 import socket
-
+import time
 help = \
 """
 
 """
+
+keys = {"ответ":"q98wd4v489hb16sdv984tb16","запрос на выполнение":"vte84a35fv4rg654asf8v68r4g","ошибка":"b984rtb1fv1b9ts1b953sd15bt"}
 
 with socket.socket() as client:
     client.connect(("127.0.0.1", 56237))
@@ -22,5 +24,13 @@ with socket.socket() as client:
             break
         elif "deactivate" in msg:
             client.send(msg.encode())
+        if len(msg.split("/")) == 4:
+            client.send(msg.encode())
+            while True:
+                data = client.recv(2048)
+                if data != "Yes":
+                    print(data)
+                    break
+    time.sleep(1)
 
 print("Работа завершена")
