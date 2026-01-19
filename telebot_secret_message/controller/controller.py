@@ -54,8 +54,7 @@ def client_thread(con: socket.socket, name):
     thrd = threading.Thread()
     while True:
         try:
-            data = con.recv(2048).decode()
-            con.send(b"Yes")
+            data1 = con.recv(2048).decode()
         except ConnectionAbortedError as e:
             clients.pop(name)
             print(e)
@@ -66,10 +65,10 @@ def client_thread(con: socket.socket, name):
             print(e)
             break
         except socket.timeout:
-            data = "g9rev49e6r6165wf1wev9rwg45df4g6"
-        if data:
-            if data != "g9rev49e6r6165wf1wev9rwg45df4g6":
-                newqueue.put(data)
+            data1 = "g9rev49e6r6165wf1wev9rwg45df4g6"
+        if data1:
+            if data1 != "g9rev49e6r6165wf1wev9rwg45df4g6":
+                newqueue.put(data1)
             if not thrd.is_alive() and not newqueue.empty():
                 thrd = threading.Thread(target=handler, args=(con, name,  newqueue.get()), daemon=True)
                 thrd.start()
@@ -77,8 +76,7 @@ def client_thread(con: socket.socket, name):
             con.close()
             break
 
-
-if __name__ == "__main__":
+def main():
     server = socket.socket()
     server.bind(("127.0.0.1", 56237))
     server.listen(5)
@@ -101,3 +99,6 @@ if __name__ == "__main__":
         print(data.decode())
     server.close()
     print("Controller завершил работу")
+
+if __name__ == "__main__":
+    main()

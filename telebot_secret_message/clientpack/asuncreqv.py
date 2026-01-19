@@ -17,11 +17,8 @@ except Exception as e:
 keys = {"ответ":"q98wd4v489hb16sdv984tb16","запрос на выполнение":"vte84a35fv4rg654asf8v68r4g","ошибка":"b984rtb1fv1b9ts1b953sd15bt"}
 
 async def update(pseudonym,userid):
-    while True:
-        msg = f"DB/update/{pseudonym}|{userid}/{keys['запрос на выполнение']}"
-        client.send(msg.encode())
-        if client.recv(2048).decode() == "Yes":
-            break
+    msg = f"DB/update/{pseudonym}|{userid}/{keys['запрос на выполнение']}"
+    client.send(msg.encode())
     print(msg)
     try:
         data = client.recv(2048).decode().split('/')
@@ -33,11 +30,8 @@ async def update(pseudonym,userid):
             return True
 
 async def new(username,pseudonym,userid):
-    while True:
-        msg = f"DB/new/{username}|{pseudonym}|{userid}/{keys['запрос на выполнение']}"
-        client.send(msg.encode())
-        if client.recv(2048).decode() == "Yes":
-            break
+    msg = f"DB/new/{username}|{pseudonym}|{userid}/{keys['запрос на выполнение']}"
+    client.send(msg.encode())
     print(msg)
     try:
         data = client.recv(2048).decode().split('/')
@@ -51,11 +45,8 @@ async def new(username,pseudonym,userid):
             print(f"[Ошибка] {data}")
 
 async def get(key):
-    while True:
-        msg = f"cache/get/{key}/{keys['запрос на выполнение']}"
-        client.send(msg.encode())
-        if client.recv(2048).decode() == "Yes":
-            break
+    msg = f"cache/get/{key}/{keys['запрос на выполнение']}"
+    client.send(msg.encode())
     print(msg)
     try:
         data = client.recv(2048).decode().split('/')
@@ -74,11 +65,8 @@ async def get(key):
 
 async def check(name):
     answ = {"True": True, "False": False}
-    while True:
-        msg = f"cache/check/{name}/{keys['запрос на выполнение']}"
-        client.send(msg.encode())
-        if client.recv(2048).decode() == "Yes":
-            break
+    msg = f"cache/check/{name}/{keys['запрос на выполнение']}"
+    client.send(msg.encode())
     print(msg)
     try:
         data = client.recv(2048).decode().split('/')

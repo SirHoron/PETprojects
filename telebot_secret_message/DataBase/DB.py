@@ -61,12 +61,9 @@ def main():
                 break
             if data[len(data)-1] == keys["запрос на выполнение"]:
                 try:
-                    while True:
-                        msg = f"{data[0]}/{commands[data[1]](data[2])}/{keys['ответ']}"
-                        client.send(msg.encode())
-                        print(msg)
-                        if client.recv(512).decode() == "Yes":
-                            break
+                    msg = f"{data[0]}/{commands[data[1]](data[2])}/{keys['ответ']}"
+                    client.send(msg.encode())
+                    print(msg)
                 except Exception as e:
                     client.send(f"{data[0]}/DB:{e}/{keys["ошибка"]}".encode())
 
