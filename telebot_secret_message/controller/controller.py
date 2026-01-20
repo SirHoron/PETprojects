@@ -38,11 +38,11 @@ def handler(con: socket.socket, name, data):
                 clients["DB"][0].close()
         elif data[0] == "deactivate":
             flage = False
-    if data[lendata-1] == keys["запрос на выполнение"] and lendata == 4:
-        reqv = f"{name}/{data[1]}/{data[2]}/{keys['запрос на выполнение']}"
+    if data[lendata-2] == keys["запрос на выполнение"] and lendata == 5:
+        reqv = f"{name}/{data[1]}/{data[2]}/{keys['запрос на выполнение']}/{data[lendata-1]}"
         clients[data[0]][0].send(reqv.encode())
-    if (data[lendata-1] == keys["ответ"] or data[lendata-1] == keys["ошибка"]) and lendata == 3:
-        reqv = f"{data[1]}/{data[2]}"
+    if (data[lendata-2] == keys["ответ"] or data[lendata-2] == keys["ошибка"]) and lendata == 4:
+        reqv = f"{data[1]}/{data[2]}/{data[lendata-1]}"
         print(reqv)
         clients[data[0]][0].send(reqv.encode())
         print(data[0])

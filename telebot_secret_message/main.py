@@ -1,5 +1,4 @@
 from telebot.async_telebot import AsyncTeleBot
-import socket
 import asyncio
 from clientpack.asuncreqv import *
 
@@ -67,7 +66,8 @@ async def ResetName(reqv):
 @bot.message_handler(commands=["send"])
 async def send(reqv):
     global CommandOfId
-    name = reqv.text.split(" ")[1]
+    name = reqv.text.split(" ")
+    name = name[len(name)-1]
     if await asyncio.create_task(check(name)):
         if await asyncio.create_task(check(reqv.chat.username)):
             await asyncio.create_task(bot.send_message(reqv.chat.id, """Напишите сообщение, которое хотите отправить"""))
@@ -81,6 +81,7 @@ async def send(reqv):
 async def handler_message(reqv):
     if reqv.chat.id in CommandOfId.keys():
         await asyncio.create_task(CommandOfId[reqv.chat.id][0](reqv))
+
 
 def main():
     print("Bot start")

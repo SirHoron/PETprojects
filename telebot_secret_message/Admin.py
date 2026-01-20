@@ -22,7 +22,7 @@ with socket.socket() as client:
             break
         elif "deactivate" in msg:
             client.send(msg.encode())
-        if len(msg.split("/")) == 4:
+        if len(msg.split("/")) == 5:
             client.send(msg.encode())
             try:
                 data = client.recv(2048)

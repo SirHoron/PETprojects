@@ -3,28 +3,27 @@ import socket
 from queue import Queue
 import threading
 from time import time
+from uuid import uuid4
 
 connect = sqlite3.Connection("cache.db", check_same_thread=False)
 cursor = connect.cursor()
 
 keys = {"ответ":"q98wd4v489hb16sdv984tb16", "запрос на выполнение":"vte84a35fv4rg654asf8v68r4g", "ошибка":"b984rtb1fv1b9ts1b953sd15bt"}
 
+answer = {}
+
 timer = {}
 
+flage_thrd = False
 flage = True
 
-def ttl():
-    global timer, flage
-    flage = False
-    while True:
-        if timer:
-            newtime = time()
-            for item in timer.keys():
-                if newtime - timer[item] >= 600.0: 
-                    timer.pop(item)
-        flage = True
+def delete(key):
+    reqv = """ DELETE FROM Cache WHERE userid = ? """
+    cursor.execute(reqv, (key))
+    connect.commit()
 
 def update(s, data: str):
+    global timer
     pseudonym, userid = data.split("|")
     reqv = """ UPDATE Cache SET pseudonym = ? WHERE userid = ? """ 
     try:
@@ -43,6 +42,7 @@ def new(username: str, pseudonym: str, userid: int):
     
 
 def check(s, data) -> bool:
+    global answer, flage_thrd
     search = """SELECT username,pseudonym,userid FROM Cache WHERE username = ? or pseudonym = ? or userid = ?"""
     cursor.execute(search, (data, data, data))
     users = cursor.fetchall()
@@ -50,13 +50,21 @@ def check(s, data) -> bool:
         timer.update({users[0][2]:time()})
         return "True"
     else:
-        if get(s, data):
-            timer.update({users[0][2]:time()})
-            return "True"
-        else:
-            return "False"
+        key = uuid4()
+        print(key)
+        s.send(f"DB/get/{data}/{keys['запрос на выполнение']}/{key}".encode())
+        while True:
+            answ = answer.get(key)
+            if answ != "None" and answ:
+                answ.split("|")
+                new(*answ)
+                timer.update({answ[2]:time()})
+                return "True"
+            else:
+                return "False"
 
 def get(s, data):
+    global answer
     search = """SELECT username,pseudonym,userid FROM Cache WHERE username = ? or pseudonym = ? or userid = ?"""
     cursor.execute(search, (data,data,data))
     user = cursor.fetchall()
@@ -67,35 +75,41 @@ def get(s, data):
         user = "|".join(user)
         return user
     else:
-        s.send(f"DB/get/{data}/{keys['запрос на выполнение']}".encode())
+        key = uuid4()
+        print(key)
+        s.send(f"DB/get/{data}/{keys['запрос на выполнение']}/{key}".encode())
         while True:
-            try:
-                data1 = s.recv(2048).decode().split("/")
-                if data1:
-                    if data1[1] == keys["ответ"] and data1[0] != "None":
-                        new(*data1[0].split("|"))
-                        return data1[0]
-                    break 
-            except socket.timeout:
-                pass
+            answ = answer.get(key)
+            if answ != "None" and answ:
+                answ = answ.split("|")
+                new(*answ)
+                timer.update({answ[2]:time()})
+                return answ
                 
 
 def handler(s, data):
+    global answer
     functions = {"get": get, "check": check, "new": new, "update": update}
     data1 = data.split("/")
-    if data1[len(data1)-1] == keys["запрос на выполнение"]:
-        try:    
-            reqv = functions[data1[1]](s, data1[2])
-            s.sendall(f'{data1[0]}/{reqv}/{keys["ответ"]}'.encode())
-        except Exception as e:
-            print(e)
-            msg = f"{data[0]}/cache:{e}/{keys['ошибка']}"
-            s.sendall(f'{msg}'.encode())
-    else:
-        print(data1)
+    if data1[len(data1)-2] == keys["запрос на выполнение"]:
+        reqv = functions[data1[1]](s, data1[2])
+        s.sendall(f'{data1[0]}/{reqv}/{keys["ответ"]}/{data1[len(data1)-1]}'.encode())
+        print("handler:",reqv)
 
+def ttl():
+    global timer, flage
+    flage = False
+    while True:
+        if timer:
+            newtime = time()
+            for item in timer.keys():
+                if newtime - timer[item] >= 600.0: 
+                    delete(int(item))
+                    timer.pop(item)
+        flage = True
 
 def main():
+    global flage_thrd, flage, answer
     with socket.socket() as s:
         s.connect(("127.0.0.1", 56237))
         print("[Command log] Подключение установлено")
@@ -107,19 +121,24 @@ def main():
         while True:
             try:
                 data = s.recv(2048).decode()
+                print(data)
             except socket.timeout:
                 data = "g9rev49e6r6165wf1wev9rwg45df4g6"
             if data:
                 if data == "deactivate all" or data == "deactivate cache":
                     break
                 else:
+                    spltdata = data.split("/")
                     if data != "g9rev49e6r6165wf1wev9rwg45df4g6":
                         newqueue.put(data)
                     if not thrd.is_alive() and not newqueue.empty() and flage:
                         info = newqueue.get()
-                        print(info)
                         thrd = threading.Thread(target=handler, args=(s, info), daemon=True)
                         thrd.start()
+                        flage_thrd = False
+                    if spltdata[len(spltdata)-2] == keys["ответ"]:
+                        print('ответ')
+                        answer.update({spltdata[len(spltdata)-1]:spltdata[0]})
 
     cursor.execute("""DELETE FROM Cache""")
     connect.commit()
