@@ -20,6 +20,7 @@ cmd = Commands()
 
 @bot.message_handler(commands=["start"])
 async def start(reqv):
+    global answer
     print("gfv")
     await asyncio.create_task(bot.send_message(reqv.chat.id,
 """Приветствую Вас, я тестовый бот.
@@ -28,6 +29,7 @@ async def start(reqv):
 
 @bot.message_handler(commands=["help"])
 async def help(reqv):
+    global answer
     message = """
 Данный бот предназначен для анонимной отправки сообщений.
 Перед тем как начать общение Вам понадобиться псевдоним, под которым вы будете общаться.
@@ -40,6 +42,7 @@ async def help(reqv):
 
 @bot.message_handler(commands=["NewName"])
 async def NewName(reqv):
+    global answer
     name: str = reqv.text.split(" ")[1].strip()
     if not await asyncio.create_task(check(name)):
         if not await asyncio.create_task(check(reqv.chat.username)):
@@ -52,6 +55,7 @@ async def NewName(reqv):
 
 @bot.message_handler(commands=["ResetName"])
 async def ResetName(reqv):
+    global answer
     name: str = reqv.text.split(" ")[1].strip()
     if not await asyncio.create_task(check(name)):
         if await asyncio.create_task(check(reqv.chat.username)):
@@ -65,6 +69,7 @@ async def ResetName(reqv):
 
 @bot.message_handler(commands=["send"])
 async def send(reqv):
+    global answer
     global CommandOfId
     name = reqv.text.split(" ")
     name = name[len(name)-1]
@@ -79,6 +84,7 @@ async def send(reqv):
 
 @bot.message_handler(content_types=["text"])
 async def handler_message(reqv):
+    global answer
     if reqv.chat.id in CommandOfId.keys():
         await asyncio.create_task(CommandOfId[reqv.chat.id][0](reqv))
 

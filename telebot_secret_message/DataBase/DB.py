@@ -25,7 +25,7 @@ def handler(client, data):
 
 def update(client:socket.socket, msg: str):
     pseudonym, userid = msg.split("|")
-    key = uuid4()
+    key = str(uuid4())
     reqv = """ UPDATE Users SET pseudonym = ? WHERE userid = ? """ 
     cursor.execute(reqv, (pseudonym,int(userid)))
     connect.commit()
@@ -35,9 +35,9 @@ def update(client:socket.socket, msg: str):
         if answ:
             return answ
 
-def new(_, data):
+def new(s, data):
     username,pseudonym,userid = data.split("|")
-    if get(userid) == "None":
+    if get(s, userid) == "None":
         reqv = """ INSERT INTO Users username,pseudonym,userid VALUES (?,?,?) """ 
         cursor.execute(reqv, (username,pseudonym,int(userid)))
         connect.commit()
@@ -93,7 +93,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-
     connect.close()
     print("DB завершил работу")

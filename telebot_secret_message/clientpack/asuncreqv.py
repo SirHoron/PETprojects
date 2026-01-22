@@ -34,7 +34,7 @@ except Exception as e:
 
 async def update(pseudonym,userid):
     global answer
-    key = uuid4()
+    key = str(uuid4())
     msg = f"DB/update/{pseudonym}|{userid}/{keys['запрос на выполнение']}/{key}"
     client.send(msg.encode())
     print(msg)
@@ -51,8 +51,8 @@ async def update(pseudonym,userid):
 
 async def new(username,pseudonym,userid):
     global answer
-    key = uuid4()
-    msg = f"DB/new/{username}|{pseudonym}|{userid}/{keys['запрос на выполнение']}"
+    key = str(uuid4())
+    msg = f"DB/new/{username}|{pseudonym}|{userid}/{keys['запрос на выполнение']}/{key}"
     client.send(msg.encode())
     print(msg)
     start = time()
@@ -68,8 +68,8 @@ async def new(username,pseudonym,userid):
 
 async def get(data):
     global answer
-    key = uuid4()
-    msg = f"cache/get/{data}/{keys['запрос на выполнение']}"
+    key = str(uuid4())
+    msg = f"cache/get/{data}/{keys['запрос на выполнение']}/{key}"
     client.send(msg.encode())
     print(msg)
     start = time()
@@ -86,7 +86,7 @@ async def get(data):
 
 async def check(name):
     global answer
-    key = uuid4()
+    key = str(uuid4())
     answ1 = {"True": True, "False": False}
     msg = f"cache/check/{name}/{keys['запрос на выполнение']}/{key}"
     client.send(msg.encode())
@@ -94,7 +94,6 @@ async def check(name):
     start = time()
     while True:
         end = time()
-        print(answer)
         answ = answer.get(key)
         if answ:
             answer.pop(key)

@@ -50,17 +50,17 @@ def check(s, data) -> bool:
         timer.update({users[0][2]:time()})
         return "True"
     else:
-        key = uuid4()
+        key = str(uuid4())
         print(key)
         s.send(f"DB/get/{data}/{keys['запрос на выполнение']}/{key}".encode())
         while True:
             answ = answer.get(key)
             if answ != "None" and answ:
-                answ.split("|")
+                answ = answ.split("|")
                 new(*answ)
                 timer.update({answ[2]:time()})
                 return "True"
-            else:
+            if answ == "None":
                 return "False"
 
 def get(s, data):
@@ -75,7 +75,7 @@ def get(s, data):
         user = "|".join(user)
         return user
     else:
-        key = uuid4()
+        key = str(uuid4())
         print(key)
         s.send(f"DB/get/{data}/{keys['запрос на выполнение']}/{key}".encode())
         while True:
@@ -85,15 +85,16 @@ def get(s, data):
                 new(*answ)
                 timer.update({answ[2]:time()})
                 return answ
+            if answ == "None":
+                return False
                 
-
 def handler(s, data):
     global answer
     functions = {"get": get, "check": check, "new": new, "update": update}
     data1 = data.split("/")
     if data1[len(data1)-2] == keys["запрос на выполнение"]:
         reqv = functions[data1[1]](s, data1[2])
-        s.sendall(f'{data1[0]}/{reqv}/{keys["ответ"]}/{data1[len(data1)-1]}'.encode())
+        s.send(f'{data1[0]}/{reqv}/{keys["ответ"]}/{data1[len(data1)-1]}'.encode())
         print("handler:",reqv)
 
 def ttl():
@@ -129,6 +130,10 @@ def main():
                     break
                 else:
                     spltdata = data.split("/")
+                    if spltdata[len(spltdata)-2] == keys["ответ"]:
+                        print('ответ')
+                        answer.update({spltdata[len(spltdata)-1]:spltdata[0]})
+                        continue
                     if data != "g9rev49e6r6165wf1wev9rwg45df4g6":
                         newqueue.put(data)
                     if not thrd.is_alive() and not newqueue.empty() and flage:
@@ -136,9 +141,6 @@ def main():
                         thrd = threading.Thread(target=handler, args=(s, info), daemon=True)
                         thrd.start()
                         flage_thrd = False
-                    if spltdata[len(spltdata)-2] == keys["ответ"]:
-                        print('ответ')
-                        answer.update({spltdata[len(spltdata)-1]:spltdata[0]})
 
     cursor.execute("""DELETE FROM Cache""")
     connect.commit()
