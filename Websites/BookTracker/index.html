@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookTracker - Трекер прочитанных книг</title>
+    <link rel="stylesheet" href="./CSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Book<span>Tracker</span></h1>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-books">12</div>
+                    <div class="stat-label">Всего книг</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="read-books">8</div>
+                    <div class="stat-label">Прочитано</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="avg-rating">4.2</div>
+                    <div class="stat-label">Средний рейтинг</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <h2>Фильтры книг</h2>
+                
+                <div class="filter-group">
+                    <h3><i class="fas fa-filter"></i> По статусу</h3>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="status" data-value="read">
+                            <input type="checkbox" id="filter-read" checked>
+                            <label for="filter-read">Прочитано</label>
+                            <span class="count">8</span>
+                        </div>
+                        <div class="filter-option" data-filter="status" data-value="reading">
+                            <input type="checkbox" id="filter-reading" checked>
+                            <label for="filter-reading">Читаю сейчас</label>
+                            <span class="count">3</span>
+                        </div>
+                        <div class="filter-option" data-filter="status" data-value="plan">
+                            <input type="checkbox" id="filter-plan" checked>
+                            <label for="filter-plan">Планирую прочитать</label>
+                            <span class="count">1</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3><i class="fas fa-star"></i> По рейтингу</h3>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="rating" data-value="5">
+                            <input type="checkbox" id="filter-5">
+                            <label for="filter-5">★★★★★ (5)</label>
+                            <span class="count">3</span>
+                        </div>
+                        <div class="filter-option" data-filter="rating" data-value="4">
+                            <input type="checkbox" id="filter-4">
+                            <label for="filter-4">★★★★ (4)</label>
+                            <span class="count">5</span>
+                        </div>
+                        <div class="filter-option" data-filter="rating" data-value="3">
+                            <input type="checkbox" id="filter-3">
+                            <label for="filter-3">★★★ (3)</label>
+                            <span class="count">3</span>
+                        </div>
+                        <div class="filter-option" data-filter="rating" data-value="2">
+                            <input type="checkbox" id="filter-2">
+                            <label for="filter-2">★★ (2)</label>
+                            <span class="count">1</span>
+                        </div>
+                        <div class="filter-option" data-filter="rating" data-value="1">
+                            <input type="checkbox" id="filter-1">
+                            <label for="filter-1">★ (1)</label>
+                            <span class="count">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3><i class="fas fa-tags"></i> По жанру</h3>
+                    <div class="filter-options">
+                        <div class="filter-option" data-filter="genre" data-value="Фантастика">
+                            <input type="checkbox" id="filter-fantasy" checked>
+                            <label for="filter-fantasy">Фантастика</label>
+                            <span class="count">5</span>
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Роман">
+                            <input type="checkbox" id="filter-novel" checked>
+                            <label for="filter-novel">Роман</label>
+                            <span class="count">3</span>
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Детектив">
+                            <input type="checkbox" id="filter-detective" checked>
+                            <label for="filter-detective">Детектив</label>
+                            <span class="count">2</span>
+                        </div>
+                        <div class="filter-option" data-filter="genre" data-value="Нон-фикшн">
+                            <input type="checkbox" id="filter-nonfiction" checked>
+                            <label for="filter-nonfiction">Нон-фикшн</label>
+                            <span class="count">2</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="reset-filters" id="reset-filters">Сбросить фильтры</button>
+            </aside>
+
+            <!-- Books Section -->
+            <main class="books-section">
+                <div class="section-header">
+                    <h2>Моя библиотека</h2>
+                    <button class="add-book-btn" id="add-book-btn">
+                        <i class="fas fa-plus"></i> Добавить книгу
+                    </button>
+                </div>
+                
+                <div class="books-grid" id="books-grid">
+                    <!-- Books will be dynamically added here -->
+                </div>
+                
+                <div class="no-results" id="no-results">
+                    <i class="fas fa-book"></i>
+                    <h3>Книги не найдены</h3>
+                    <p>Попробуйте изменить параметры фильтрации</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Book Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Добавить новую книгу</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-book-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="book-title">Название книги *</label>
+                            <input type="text" id="book-title" required>
+                            <div class="error-message" id="title-error">Пожалуйста, введите название книги</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-author">Автор *</label>
+                            <input type="text" id="book-author" required>
+                            <div class="error-message" id="author-error">Пожалуйста, введите автора книги</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="book-genre">Жанр</label>
+                            <select id="book-genre">
+                                <option value="Фантастика">Фантастика</option>
+                                <option value="Роман">Роман</option>
+                                <option value="Детектив">Детектив</option>
+                                <option value="Нон-фикшн">Нон-фикшн</option>
+                                <option value="Фэнтези">Фэнтези</option>
+                                <option value="Биография">Биография</option>
+                                <option value="Научная литература">Научная литература</option>
+                                <option value="Поэзия">Поэзия</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-status">Статус</label>
+                            <select id="book-status">
+                                <option value="read">Прочитано</option>
+                                <option value="reading">Читаю сейчас</option>
+                                <option value="plan">Планирую прочитать</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Рейтинг</label>
+                        <div class="rating-input">
+                            <div class="rating-stars" id="rating-stars">
+                                <span class="rating-star" data-value="1">★</span>
+                                <span class="rating-star" data-value="2">★</span>
+                                <span class="rating-star" data-value="3">★</span>
+                                <span class="rating-star" data-value="4">★</span>
+                                <span class="rating-star" data-value="5">★</span>
+                            </div>
+                            <span id="rating-value">0</span>/5
+                        </div>
+                        <input type="hidden" id="book-rating" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="book-notes">Заметки (необязательно)</label>
+                        <textarea id="book-notes" rows="3" placeholder="Ваши мысли о книге..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancel-btn">Отмена</button>
+                        <button type="submit" class="btn-primary">Добавить книгу</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="./JS.js"></script>
+</body>
+</html>

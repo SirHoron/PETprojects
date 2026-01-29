@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinimalStore — Ультрасовременный магазин</title>
+    <link rel="stylesheet" href="./CSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#home" class="logo" data-page="home">minimal<span>store</span></a>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="#home" data-page="home">Главная</a></li>
+                <li><a href="#products" data-page="products">Товары</a></li>
+                <li><a href="#cart" data-page="cart">Корзина</a></li>
+                <li><a href="#checkout" data-page="checkout">Оформление</a></li>
+            </ul>
+            
+            <div class="nav-right">
+                <div class="cart-icon" id="cart-icon" data-page="cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент (SPA контейнер) -->
+    <main class="main-content">
+        <!-- Главная страница -->
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <h1 class="hero-title">Ультрасовременный минимализм</h1>
+                <p class="hero-subtitle">Откройте для себя коллекцию предметов, созданных для тех, кто ценит простоту, функциональность и безупречный дизайн. Каждый продукт — это гармония формы и содержания.</p>
+            </div>
+            
+            <div class="container">
+                <div class="filters-section">
+                    <div class="filters-container">
+                        <div class="filters-left">
+                            <button class="filter-btn active" data-filter="all">
+                                <i class="fas fa-border-all"></i> Все товары
+                            </button>
+                            <button class="filter-btn" data-filter="electronics">
+                                <i class="fas fa-laptop"></i> Электроника
+                            </button>
+                            <button class="filter-btn" data-filter="furniture">
+                                <i class="fas fa-chair"></i> Мебель
+                            </button>
+                            <button class="filter-btn" data-filter="accessories">
+                                <i class="fas fa-clock"></i> Аксессуары
+                            </button>
+                        </div>
+                        
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Поиск товаров...">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="products-grid">
+                    <!-- Товары будут загружены через JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница корзины -->
+        <section id="cart" class="page">
+            <div class="container cart-page">
+                <div class="cart-header">
+                    <h1>Корзина</h1>
+                    <p>Товары, которые вы добавили</p>
+                </div>
+                
+                <div class="cart-content">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Товары в корзине будут загружены через JavaScript -->
+                        <div class="empty-cart" id="empty-cart">
+                            <i class="fas fa-shopping-bag"></i>
+                            <h3>Корзина пуста</h3>
+                            <p>Добавьте товары из каталога</p>
+                            <button class="btn-primary" data-page="home" style="margin-top: 20px;">Вернуться к покупкам</button>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-summary" id="cart-summary">
+                        <div class="summary-title">Итого</div>
+                        <div class="summary-row">
+                            <span>Товары (0)</span>
+                            <span id="subtotal">0 ₽</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Доставка</span>
+                            <span id="shipping">0 ₽</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Всего</span>
+                            <span id="total">0 ₽</span>
+                        </div>
+                        <button class="checkout-btn" id="checkout-btn" data-page="checkout">Оформить заказ</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница оформления заказа -->
+        <section id="checkout" class="page">
+            <div class="container checkout-page">
+                <div class="checkout-header">
+                    <h1>Оформление заказа</h1>
+                    <p>Завершите оформление заказа в несколько шагов</p>
+                </div>
+                
+                <div class="checkout-steps">
+                    <div class="step active" id="step-info">
+                        <div class="step-icon">1</div>
+                        <div class="step-label">Информация</div>
+                    </div>
+                    <div class="step" id="step-shipping">
+                        <div class="step-icon">2</div>
+                        <div class="step-label">Доставка</div>
+                    </div>
+                    <div class="step" id="step-payment">
+                        <div class="step-icon">3</div>
+                        <div class="step-label">Оплата</div>
+                    </div>
+                    <div class="step" id="step-confirm">
+                        <div class="step-icon">4</div>
+                        <div class="step-label">Подтверждение</div>
+                    </div>
+                </div>
+                
+                <div class="checkout-content">
+                    <!-- Шаг 1: Информация -->
+                    <div class="checkout-form" id="checkout-form-info">
+                        <div class="form-section">
+                            <h2>Контактная информация</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="first-name">Имя</label>
+                                    <input type="text" id="first-name" placeholder="Введите имя">
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Фамилия</label>
+                                    <input type="text" id="last-name" placeholder="Введите фамилию">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" placeholder="example@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Телефон</label>
+                                    <input type="tel" id="phone" placeholder="+7 (999) 123-45-67">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checkout-navigation">
+                            <button class="btn-secondary" data-page="cart">Назад в корзину</button>
+                            <button class="btn-primary" id="next-to-shipping">Далее: Доставка</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Шаг 2: Доставка -->
+                    <div class="checkout-form" id="checkout-form-shipping" style="display: none;">
+                        <div class="form-section">
+                            <h2>Адрес доставки</h2>
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label for="address">Адрес</label>
+                                    <input type="text" id="address" placeholder="Улица, дом, квартира">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">Город</label>
+                                    <input type="text" id="city" placeholder="Москва">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip">Индекс</label>
+                                    <input type="text" id="zip" placeholder="123456">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="shipping-method">Способ доставки</label>
+                                    <select id="shipping-method">
+                                        <option value="standard">Стандартная (3-5 дней) — 300 ₽</option>
+                                        <option value="express">Экспресс (1-2 дня) — 700 ₽</option>
+                                        <option value="pickup">Самовывоз — бесплатно</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checkout-navigation">
+                            <button class="btn-secondary" id="back-to-info">Назад: Информация</button>
+                            <button class="btn-primary" id="next-to-payment">Далее: Оплата</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Шаг 3: Оплата -->
+                    <div class="checkout-form" id="checkout-form-payment" style="display: none;">
+                        <div class="form-section">
+                            <h2>Способ оплаты</h2>
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label for="card-number">Номер карты</label>
+                                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-expiry">Срок действия</label>
+                                    <input type="text" id="card-expiry" placeholder="MM/ГГ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-cvc">CVC</label>
+                                    <input type="text" id="card-cvc" placeholder="123">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="card-name">Имя на карте</label>
+                                    <input type="text" id="card-name" placeholder="IVAN IVANOV">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="checkout-navigation">
+                            <button class="btn-secondary" id="back-to-shipping">Назад: Доставка</button>
+                            <button class="btn-primary" id="next-to-confirm">Далее: Подтверждение</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Шаг 4: Подтверждение -->
+                    <div class="checkout-form" id="checkout-form-confirm" style="display: none;">
+                        <div class="form-section">
+                            <h2>Подтверждение заказа</h2>
+                            <div id="order-review">
+                                <!-- Информация о заказе будет вставлена сюда -->
+                            </div>
+                        </div>
+                        
+                        <div class="checkout-navigation">
+                            <button class="btn-secondary" id="back-to-payment">Назад: Оплата</button>
+                            <button class="btn-primary" id="place-order">Разместить заказ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Страница подтверждения заказа -->
+        <section id="confirmation" class="page">
+            <div class="confirmation-page">
+                <div class="confirmation-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h1 class="confirmation-title">Заказ подтвержден!</h1>
+                <p class="confirmation-message">Ваш заказ успешно оформлен. Мы отправили подтверждение на ваш email. Вы можете отслеживать статус заказа в личном кабинете.</p>
+                
+                <div class="order-details" id="order-details">
+                    <!-- Детали заказа будут вставлены сюда -->
+                </div>
+                
+                <button class="btn-primary" data-page="home">Вернуться к покупкам</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Анимация добавления в корзину -->
+    <div class="add-to-cart-animation" id="add-to-cart-animation">
+        <i class="fas fa-shopping-bag"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MinimalStore</h3>
+                    <p>Ультрасовременный минималистичный магазин для тех, кто ценит простоту и качество.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Категории</h3>
+                    <p><a href="#" data-filter="electronics">Электроника</a></p>
+                    <p><a href="#" data-filter="furniture">Мебель</a></p>
+                    <p><a href="#" data-filter="accessories">Аксессуары</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Помощь</h3>
+                    <p><a href="#">Доставка и оплата</a></p>
+                    <p><a href="#">Возврат товара</a></p>
+                    <p><a href="#">FAQ</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Москва, ул. Минимальная, 1</p>
+                    <p>+7 (999) 123-45-67</p>
+                    <p>info@minimalstore.ru</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MinimalStore. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="./JS.js"></script>
+</body>
+</html>
