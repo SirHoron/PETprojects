@@ -4,19 +4,40 @@ KEYDOWN, KEYUP, RESIZABLE, VIDEORESIZE, time
 from units import *
 import threading
 
+class Unit_Group:
+    def __init__(self, *args):
+        self.spgroup = sprite.Group()
+        self.listunit: list[Unit] = []
+        if args:
+            self.listunit.append(*args)
+            for i in self.listunit:
+                if i.group:
+                    self.spgroup.add(i.group.sprites())
+                else:
+                    self.spgroup.add(i.image)
+    def add(self, *args):
+        self.listunit.append(*args)
+        for i in args:
+            if i.group:
+                self.spgroup.add(i.group.sprites())
+            else:
+                self.spgroup.add(i.image)
+    def update(self, func=None, *args):
+        for i in self.listunit:
+            i.update(func, *args)
+
 class data:
-    allsprites = sprite.Group()
-    blocks = [sprite.Group()]
     keysdel = {1073742048: False, 99: False, 118: False, None: "None"}
-    flage = [False, 0]
-    count = 1
 
 def main():
     init()
-    screen = display.set_mode(size=(1200, 600), flags=RESIZABLE)
-    allsprites, keysdel, blocks, flage, count = data.allsprites, data.keysdel, data.blocks, data.flage, data.count
-    Canvas1((1200, 600), (0,0,0), allsprites)
-    spblock: list[Blocks] = [Blocks((allsprites, blocks[0]), 600, 300)]
+    MainScreen = display.set_mode(size=(1200, 600), flags=RESIZABLE)
+    scrimsprites = Unit_Group()
+    screensprites = Unit_Group()
+    w, h = display.get_desktop_sizes()[0]
+    screensprites.add(Screen(screensprites.spgroup, 0, 0, w, h))
+    scrimsprites.add(Scrim(scrimsprites.spgroup, 0,120,1200,480))
+    scrimsprites.add(Scrim(scrimsprites.spgroup, 0,0,1200,120, "sprites/Canvas1.png"))
     run = True
     clock = time.Clock()
     while run:
@@ -25,44 +46,21 @@ def main():
                 run = False
                 continue
             if e.type == MOUSEMOTION:
-                if flage[0]:
-                    blocks[flage[1]].update(*e.dict["rel"])
-                    continue
-                for f in range(len(spblock[flage[1]].listpomps)):
-                    if spblock[flage[1]].listpomps[f].rect.collidepoint(e.dict["pos"]):
-                        spblock[flage[1]].listpomps[f].UpdateStates()
-                    else:
-                        spblock[flage[1]].listpomps[f].UpdateStatesTo()
-                continue
-            if e.type == KEYDOWN:
-                print(e.dict)
-                if type(keysdel.get(e.dict["key"])) == bool:
-                    keysdel[e.dict["key"]] = True
-                continue
-            if e.type == KEYUP:
-                if type(keysdel.get(e.dict["key"])) == bool:
-                    keysdel[e.dict["key"]] = False
-                continue
-            if e.type == MOUSEBUTTONDOWN:
-                for i in range(len(spblock)):
-                    if spblock[i].rect().collidepoint(e.dict["pos"]):
-                        flage[0] = True
-                        flage[1] = i
-            if e.type == MOUSEBUTTONUP:
-                flage[0] = False
-            if e.type == VIDEORESIZE:
                 pass
+            if e.type == KEYDOWN:
+                pass
+            if e.type == KEYUP:
+                pass
+            if e.type == MOUSEBUTTONDOWN:
+                pass
+            if e.type == MOUSEBUTTONUP:
+                pass
+            if e.type == VIDEORESIZE:
+                screensprites.update("resize", e.dict["size"])
+                scrimsprites.update("resize", e.dict["size"])
 
-        if keysdel[1073742048] and keysdel[99]:
-            run = False
-        if keysdel[1073742048] and keysdel[118]:
-            if count:
-                blocks.append(sprite.Group())
-                spblock.append(Blocks((allsprites, blocks[len(blocks)-1]), 600, 300))
-                count = 0
-        else:
-            count = 1
-        allsprites.draw(screen)
+        scrimsprites.spgroup.draw(screensprites.listunit[0].image.image)
+        screensprites.spgroup.draw(MainScreen)
         display.update()
         clock.tick(60)
     quit()
