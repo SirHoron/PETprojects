@@ -12,7 +12,8 @@ class Segments(sprite.Sprite):
     def resize(self, newsize):
         w,h = self.winsize
         w1,h1 = newsize
-        self.image = transform.scale(self.image, (round((w1/w)*self.sprtsize[0]),round((h1/h)*self.sprtsize[1])))
+        self.sprtsize = (round((w1/w)*self.sprtsize[0]),round((h1/h)*self.sprtsize[1]))
+        self.image = transform.scale(self.image, self.sprtsize)
         self.winsize = newsize
     def UpdateStates():
         pass
