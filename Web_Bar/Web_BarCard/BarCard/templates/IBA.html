@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+    <head>
+        <link rel="stylesheet" href="{% static 'css/IBA.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <title>Мир Коктейлей | Официальные коктейли IBA</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </head>
+        <body>
+        <!-- Шапка с навигацией -->
+        <header>
+            <div class="container header-container">
+                <a href="http://127.0.0.1:8000" class="logo">
+                    <i class="fas fa-cocktail"></i> Мир Коктейлей
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="http://127.0.0.1:8000" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="http://127.0.0.1:8000/list/IBA"><i class="fas fa-list"></i> Список IBA</a></li>
+                        <li><a href="http://127.0.0.1:8000/list"><i class="fas fa-list"></i> Список коктейлей</a></li>
+                        <li><a href="http://127.0.0.1:8000/contacts"><i class="fas fa-address-book"></i> Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    
+        <!-- Герой-секция для IBA -->
+        <section class="iba-hero">
+            <div class="container">
+                <h1>Официальные коктейли IBA</h1>
+                <p>Международная ассоциация барменов (IBA) определяет стандарты для самых известных коктейлей мира. Здесь представлены все официальные коктейли IBA, разделенные на три категории.</p>
+                <div class="iba-logo">INTERNATIONAL BARTENDERS ASSOCIATION</div>
+            </div>
+        </section>
+    
+        <!-- Навигация по категориям IBA -->
+        <section class="iba-category-nav">
+            <div class="container">
+                <div class="category-tabs">
+                    <div class="category-tab active" data-category="unforgettable">
+                        <i class="fas fa-star"></i> Незабываемые
+                    </div>
+                    <div class="category-tab" data-category="contemporary">
+                        <i class="fas fa-award"></i> Современная классика
+                    </div>
+                    <div class="category-tab" data-category="new-era">
+                        <i class="fas fa-rocket"></i> Напитки новой эры
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Информация о IBA -->
+        <section class="iba-info">
+            <div class="container">
+                <h2>О списке коктейлей IBA</h2>
+                <p>Международная ассоциация барменов (IBA) обновляет свой официальный список коктейлей каждые несколько лет. Текущий список разделен на три основные категории:</p>
+                <p><span class="highlight">«Незабываемые» (The Unforgettables)</span> — исторические классические коктейли, которые выдержали испытание временем и остаются популярными десятилетиями.</p>
+                <p><span class="highlight">«Современная классика» (Contemporary Classics)</span> — коктейли, созданные в последние десятилетия, которые уже стали современной классикой.</p>
+                <p><span class="highlight">«Напитки новой эры» (New Era Drinks)</span> — новые и инновационные коктейли, отражающие современные тенденции в миксологии.</p>
+            </div>
+        </section>
+    
+        <!-- Категория 1: Незабываемые -->
+        <section class="category-section" id="unforgettable-category">
+            <div class="container">
+                <div class="category-header">
+                    <h2 class="category-title">Незабываемые</h2>
+                    <p class="category-subtitle">Исторические классические коктейли, которые выдержали испытание временем и остаются популярными десятилетиями.</p>
+                </div>
+
+                <div class="cocktail-count">Количество коктейлей: <span id="unforgettable-count">8</span></div>
+
+                <div class="cocktail-grid" id="unforgettable-grid">
+                    <!-- Коктейли будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </section>
+    
+        <!-- Категория 2: Современная классика -->
+        <section class="category-section hidden" id="contemporary-category">
+            <div class="container">
+                <div class="category-header">
+                    <h2 class="category-title">Современная классика</h2>
+                    <p class="category-subtitle">Коктейли, созданные в последние десятилетия, которые уже стали современной классикой и популярны во всем мире.</p>
+                </div>
+
+                <div class="cocktail-count">Количество коктейлей: <span id="contemporary-count">8</span></div>
+
+                <div class="cocktail-grid" id="contemporary-grid">
+                    <!-- Коктейли будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </section>
+    
+        <!-- Категория 3: Напитки новой эры -->
+        <section class="category-section hidden" id="new-era-category">
+            <div class="container">
+                <div class="category-header">
+                    <h2 class="category-title">Напитки новой эры</h2>
+                    <p class="category-subtitle">Новые и инновационные коктейли, отражающие современные тенденции в миксологии и технологии приготовления напитков.</p>
+                </div>
+
+                <div class="cocktail-count">Количество коктейлей: <span id="new-era-count">8</span></div>
+
+                <div class="cocktail-grid" id="new-era-grid">
+                    <!-- Коктейли будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </section>
+    
+        <!-- Подвал -->
+        <footer>
+            <div class="container footer-content">
+                <div class="footer-logo">Мир Коктейлей</div>
+                <div class="footer-links">
+                    <a href="http://127.0.0.1:8000/list">Главная</a>
+                    <a href="http://127.0.0.1:8000/list/IBA">Список IBA</a>
+                    <a href="http://127.0.0.1:8000/contacts">Контакты</a>
+                    <a href="#">О нас</a>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </footer>
+    
+        <script>
+            // Данные коктейлей IBA по категориям
+            const ibaCocktails = {
+                unforgettable: [
+                    {
+                        id: 1,
+                        name: "Негрони",
+                        category: "Крепкий",
+                        ingredients: "Джин, Красный вермут, Кампари",
+                        description: "Итальянский классический коктейль, созданный в 1919 году во Флоренции. Идеальный баланс джина, вермута и кампари.",
+                        glass: "Старый фэшн",
+                        strength: "Высокая",
+                        image: "https://images.unsplash.com/photo-1585621386286-5c7c5d7c09f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1919"
+                    },
+                    {
+                        id: 2,
+                        name: "Мартини",
+                        category: "Классический",
+                        ingredients: "Джин, Сухой вермут",
+                        description: "Самый известный коктейль в мире. Символ элегантности и утонченности. Подается ледяным с оливкой или цедрой лимона.",
+                        glass: "Коктейльный бокал",
+                        strength: "Высокая",
+                        image: "https://images.unsplash.com/photo-1514361892636-6d4d7f5e7b9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1860s"
+                    },
+                    {
+                        id: 3,
+                        name: "Манхэттен",
+                        category: "Крепкий",
+                        ingredients: "Виски, Красный вермут, Ангостура",
+                        description: "Классический коктейль, созданный в Нью-Йорке в 1870-х годах. Богатый вкус виски с мягкостью вермута.",
+                        glass: "Коктейльный бокал",
+                        strength: "Высокая",
+                        image: "https://images.unsplash.com/photo-1542849187-5ec6ea5e6a27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1870s"
+                    },
+                    {
+                        id: 4,
+                        name: "Олд Фэшн",
+                        category: "Крепкий",
+                        ingredients: "Бурбон, Ангостура, Сахар, Апельсин",
+                        description: "Один из старейших известных коктейлей, упоминаемый с 1800-х годов. Основан на бурбоне с биттерами.",
+                        glass: "Старый фэшн",
+                        strength: "Высокая",
+                        image: "https://images.unsplash.com/photo-1514361892636-6d4d7f5e7b9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1800s"
+                    },
+                    {
+                        id: 5,
+                        name: "Дайкири",
+                        category: "Кислый",
+                        ingredients: "Белый ром, Сок лайма, Сахарный сироп",
+                        description: "Классический кубинский коктейль, созданный в конце 19 века. Освежающий баланс сладости и кислоты.",
+                        glass: "Коктейльный бокал",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1567103476910-6e5c8c57bf39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1890s"
+                    },
+                    {
+                        id: 6,
+                        name: "Мохито",
+                        category: "Освежающий",
+                        ingredients: "Белый ром, Содовая, Лайм, Мята, Сахар",
+                        description: "Кубинский классический коктейль, известный с 16 века. Освежающее сочетание мяты, лайма и рома.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1500s"
+                    },
+                    {
+                        id: 7,
+                        name: "Кровавая Мэри",
+                        category: "Пряный",
+                        ingredients: "Водка, Томатный сок, Лимонный сок, Ворчестерский соус, Табаско",
+                        description: "Знаменитый коктейль, созданный в 1920-х годах. Пряный томатный напиток, популярный на бранчах.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1920s"
+                    },
+                    {
+                        id: 8,
+                        name: "Сайдкар",
+                        category: "Кислый",
+                        ingredients: "Коньяк, Трипл-сек, Сок лимона",
+                        description: "Классический коктейль эпохи сухого закона. Идеальный баланс коньяка, лимонного сока и апельсинового ликера.",
+                        glass: "Коктейльный бокал",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1920s"
+                    }
+                ],
+                contemporary: [
+                    {
+                        id: 9,
+                        name: "Космополитен",
+                        category: "Фруктовый",
+                        ingredients: "Водка, Трипл-сек, Клюквенный сок, Сок лайма",
+                        description: "Популяризированный сериалом 'Секс в большом городе'. Элегантный розовый коктейль с цитрусовыми нотами.",
+                        glass: "Мартини",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1980s"
+                    },
+                    {
+                        id: 10,
+                        name: "Маргарита",
+                        category: "Кислый",
+                        ingredients: "Текила, Трипл-сек, Сок лайма",
+                        description: "Самый популярный текила-коктейль в мире. Создан в 1930-х годах, стал классикой в 1970-х.",
+                        glass: "Бокал Маргарита",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1551751299-1b51cab2694c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1930s"
+                    },
+                    {
+                        id: 11,
+                        name: "Пина Колада",
+                        category: "Сладкий",
+                        ingredients: "Белый ром, Кокосовый крем, Ананасовый сок",
+                        description: "Тропический коктейль, ставший хитом в 1970-х годах. Кремовая текстура с вкусом ананаса и кокоса.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1970s"
+                    },
+                    {
+                        id: 12,
+                        name: "Белый Русский",
+                        category: "Сладкий",
+                        ingredients: "Водка, Кофейный ликёр, Сливки",
+                        description: "Кремовый кофейный коктейль, популяризированный фильмом 'Большой Лебовски'. Богатый и indulgent напиток.",
+                        glass: "Олд фэшн",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1544145945-1d9a8e1a82c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1960s"
+                    },
+                    {
+                        id: 13,
+                        name: "Эспрессо Мартини",
+                        category: "Кофейный",
+                        ingredients: "Водка, Кофейный ликёр, Эспрессо",
+                        description: "Создан в 1980-х годах для уставшей модели. Идеальный баланс кофеина и алкоголя с кремовой пенкой.",
+                        glass: "Коктейльный бокал",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1980s"
+                    },
+                    {
+                        id: 14,
+                        name: "Май Тай",
+                        category: "Тропический",
+                        ingredients: "Выдержанный ром, Миндальный сироп, Сок лайма",
+                        description: "Полинезийский коктейль, ставший популярным в 1950-х. Сложный вкус рома с цитрусами и миндалем.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1568103211857-76d5c9d7f8c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1950s"
+                    },
+                    {
+                        id: 15,
+                        name: "Лонг Айленд Айс Ти",
+                        category: "Крепкий",
+                        ingredients: "Водка, Джин, Ром, Текила, Трипл-сек, Кола, Сок лимона",
+                        description: "Знаменитый крепкий коктейль, созданный в 1970-х. Содержит 5 видов алкоголя, но на вкус как чай со льдом.",
+                        glass: "Хайбол",
+                        strength: "Очень высокая",
+                        image: "https://images.unsplash.com/photo-1568564321586-871f4c01f4e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1970s"
+                    },
+                    {
+                        id: 16,
+                        name: "Френч 75",
+                        category: "Игристый",
+                        ingredients: "Джин, Лимонный сок, Сахарный сироп, Шампанское",
+                        description: "Классический игристый коктейль, названный в честь французской пушки времен Первой мировой войны.",
+                        glass: "Флюте",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1915"
+                    }
+                ],
+                newEra: [
+                    {
+                        id: 17,
+                        name: "Апероль Шприц",
+                        category: "Освежающий",
+                        ingredients: "Апероль, Просекко, Содовая",
+                        description: "Современный итальянский аперитив, ставший мировым хитом в 2000-х годах. Освежающий и легко пьющийся.",
+                        glass: "Винный бокал",
+                        strength: "Низкая",
+                        image: "https://images.unsplash.com/photo-1556855810-ac404aa91e85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "2000s"
+                    },
+                    {
+                        id: 18,
+                        name: "Негрони Сбальято",
+                        category: "Игристый",
+                        ingredients: "Джин, Красный вермут, Кампари, Просекко",
+                        description: "Игристая версия классического Негрони. Более легкий и освежающий вариант для современных баров.",
+                        glass: "Бокал для шампанского",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1514361892636-6d4d7f5e7b9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "2010s"
+                    },
+                    {
+                        id: 19,
+                        name: "Пенициллин",
+                        category: "Пряный",
+                        ingredients: "Выдержанный виски, Имбирный сироп, Сок лимона, Мед, Имбирный эль",
+                        description: "Современный классик, созданный в 2005 году. Дымный виски с имбирем и медом.",
+                        glass: "Старый фэшн",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1544145945-1d9a8e1a82c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "2005"
+                    },
+                    {
+                        id: 20,
+                        name: "Брамбл",
+                        category: "Фруктовый",
+                        ingredients: "Джин, Сок лимона, Сахарный сироп, Ежевичный ликёр",
+                        description: "Современный коктейль, созданный в Лондоне в 1980-х. Джин с ежевичным ликером и лимонным соком.",
+                        glass: "Старый фэшн",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1568564321586-871f4c01f4e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1980s"
+                    },
+                    {
+                        id: 21,
+                        name: "Ураган",
+                        category: "Тропический",
+                        ingredients: "Светлый ром, Темный ром, Сок пассифлоры, Сок апельсина, Сок лайма, Гренадин",
+                        description: "Новый Орлеанский классик, созданный в 1940-х, но ставший популярным во всем мире в последние десятилетия.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1940s"
+                    },
+                    {
+                        id: 22,
+                        name: "Клубничный Дайкири",
+                        category: "Фруктовый",
+                        ingredients: "Белый ром, Сок лайма, Сахарный сироп, Клубника",
+                        description: "Современная фруктовая интерпретация классического Дайкири. Популярен в сезон клубники.",
+                        glass: "Коктейльный бокал",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "1990s"
+                    },
+                    {
+                        id: 23,
+                        name: "Мохито из маракуйи",
+                        category: "Тропический",
+                        ingredients: "Белый ром, Содовая, Лайм, Мята, Маракуйя, Сахар",
+                        description: "Современная тропическая вариация классического Мохито. Экзотический вкус маракуйи с мятой.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "2000s"
+                    },
+                    {
+                        id: 24,
+                        name: "Клюквенный Мохито",
+                        category: "Фруктовый",
+                        ingredients: "Белый ром, Содовая, Лайм, Мята, Клюквенный сок, Сахар",
+                        description: "Зимняя версия Мохито с клюквенным соком. Популярен в праздничный сезон.",
+                        glass: "Хайбол",
+                        strength: "Средняя",
+                        image: "https://images.unsplash.com/photo-1568564321586-871f4c01f4e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        year: "2010s"
+                    }
+                ]
+            };
+        
+            // DOM элементы
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const categorySections = {
+                unforgettable: document.getElementById('unforgettable-category'),
+                contemporary: document.getElementById('contemporary-category'),
+                newEra: document.getElementById('new-era-category')
+            };
+
+            const countElements = {
+                unforgettable: document.getElementById('unforgettable-count'),
+                contemporary: document.getElementById('contemporary-count'),
+                newEra: document.getElementById('new-era-count')
+            };
+        
+            // Инициализация страницы
+            document.addEventListener('DOMContentLoaded', () => {
+                // Рендерим коктейли для каждой категории
+                renderCocktails('unforgettable', ibaCocktails.unforgettable);
+                renderCocktails('contemporary', ibaCocktails.contemporary);
+                renderCocktails('newEra', ibaCocktails.newEra);
+
+                // Обновляем счетчики
+                countElements.unforgettable.textContent = ibaCocktails.unforgettable.length;
+                countElements.contemporary.textContent = ibaCocktails.contemporary.length;
+                countElements.newEra.textContent = ibaCocktails.newEra.length;
+
+                // Обработчики для переключения категорий
+                categoryTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const category = tab.getAttribute('data-category');
+
+                        // Убираем активный класс у всех табов
+                        categoryTabs.forEach(t => t.classList.remove('active'));
+                        // Добавляем активный класс текущему табу
+                        tab.classList.add('active');
+
+                        // Скрываем все секции
+                        Object.values(categorySections).forEach(section => {
+                            section.classList.add('hidden');
+                        });
+
+                        // Показываем выбранную секцию
+                        if (categorySections[category]) {
+                            categorySections[category].classList.remove('hidden');
+
+                            // Плавная прокрутка к секции
+                            setTimeout(() => {
+                                categorySections[category].scrollIntoView({ behavior: 'smooth' });
+                            }, 100);
+                        }
+                    });
+                });
+            });
+        
+            // Функция для отображения коктейлей
+            function renderCocktails(category, cocktails) {
+                const gridId = `${category}-grid`;
+                const grid = document.getElementById(gridId);
+
+                if (!grid) return;
+
+                grid.innerHTML = '';
+
+                cocktails.forEach(cocktail => {
+                    const card = document.createElement('article');
+                    card.className = 'cocktail-card';
+
+                    card.innerHTML = `
+                        <img src="${cocktail.image}" alt="${cocktail.name}" class="cocktail-img">
+                        <div class="cocktail-info">
+                            <div class="cocktail-header">
+                                <h3 class="cocktail-name">${cocktail.name}</h3>
+                                <span class="cocktail-badge">IBA</span>
+                            </div>
+                            <span class="cocktail-category">${cocktail.category}</span>
+                            <p class="cocktail-desc">${cocktail.description}</p>
+                            <div class="cocktail-ingredients">
+                                <strong>Основные ингредиенты:</strong> ${cocktail.ingredients}
+                                ${cocktail.year ? `<br><strong>Год создания:</strong> ${cocktail.year}` : ''}
+                            </div>
+                            <div class="cocktail-footer">
+                                <div class="cocktail-glass">
+                                    <i class="fas fa-glass-whiskey"></i> ${cocktail.glass}
+                                </div>
+                                <div class="cocktail-strength">
+                                    <i class="fas fa-tachometer-alt"></i> ${cocktail.strength}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    grid.appendChild(card);
+                });
+            }
+        
+            // Выделение активного пункта меню
+            document.querySelectorAll('nav a').forEach(anchor => {
+                if (anchor.href === window.location.href) {
+                    anchor.classList.add('active');
+                }
+
+                anchor.addEventListener('click', function() {
+                    document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        
+            console.log("Страница коктейлей IBA загружена. Выберите категорию для просмотра!");
+        </script>
+    </body>
+</html>

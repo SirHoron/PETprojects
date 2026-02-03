@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир Коктейлей | Список коктейлей</title>
+    <link rel="stylesheet" href="{% static "css\list_coctail.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Шапка с навигацией -->
+    <header>
+        <div class="container header-container">
+            <a href="http://127.0.0.1:8000" class="logo">
+                <i class="fas fa-cocktail"></i> Мир Коктейлей
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="http://127.0.0.1:8000" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="http://127.0.0.1:8000/list/IBA"><i class="fas fa-list"></i> Список IBA</a></li>
+                    <li><a href="http://127.0.0.1:8000/list"><i class="fas fa-list"></i> Список коктейлей</a></li>
+                    <li><a href="http://127.0.0.1:8000/contacts"><i class="fas fa-address-book"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Герой-секция для списка коктейлей -->
+    <section class="cocktails-hero">
+        <div class="container">
+            <h1>Полная коллекция коктейлей</h1>
+            <p>Исследуйте нашу обширную коллекцию классических и современных коктейлей. Используйте фильтры, чтобы найти идеальный напиток для любого случая.</p>
+        </div>
+    </section>
+
+    <!-- Секция фильтров -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Поиск коктейля по названию или ингредиенту...">
+                </div>
+                
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Все коктейли</button>
+                    <button class="filter-btn" data-filter="classic">Классика</button>
+                    <button class="filter-btn" data-filter="modern">Современные</button>
+                </div>
+                
+                <select class="filter-select" id="categoryFilter">
+                    <option value="all">Все категории</option>
+                    <option value="strong">Крепкие</option>
+                    <option value="refreshing">Освежающие</option>
+                    <option value="sweet">Сладкие</option>
+                    <option value="sour">Кислые</option>
+                    <option value="coffee">Кофейные</option>
+                    <option value="non-alcoholic">Безалкогольные</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция коктейлей -->
+    <section class="cocktails-section">
+        <div class="container">
+            <h2 class="section-title">Коллекция коктейлей</h2>
+            <div class="cocktail-count">Показано: <span id="cocktailCount">20</span> из 20 коктейлей</div>
+            
+            <div class="cocktail-grid" id="cocktailGrid">
+                <!-- Коктейли будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">Мир Коктейлей</div>
+            <div class="footer-links">
+                <a href="http://127.0.0.1:8000">Главная</a>
+                <a href="http://127.0.0.1:8000/list/IBA">Список IBA</a>
+                <a href="http://127.0.0.1:8000/contacts">Контакты</a>
+                <a href="#">О нас</a>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Массив коктейлей
+        const cocktails = [
+            {
+                id: 1,
+                name: "Негрони",
+                category: "strong",
+                type: "iba",
+                ingredients: "Джин, Красный вермут, Кампари",
+                description: "Идеальный баланс джина, вермута и кампари с горьковато-сладким вкусом и апельсиновой нотой.",
+                glass: "Старый фэшн",
+                strength: "Высокая",
+                image: "https://images.unsplash.com/photo-1585621386286-5c7c5d7c09f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "IBA"
+            },
+            {
+                id: 2,
+                name: "Маргарита",
+                category: "sour",
+                type: "iba",
+                ingredients: "Текила, Трипл-сек, Сок лайма",
+                description: "Свежий, цитрусовый коктейль на основе текилы с кислинкой лайма и соленой окантовкой бокала.",
+                glass: "Маргарита",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1551751299-1b51cab2694c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "IBA"
+            },
+            {
+                id: 3,
+                name: "Мохито",
+                category: "refreshing",
+                type: "iba",
+                ingredients: "Белый ром, Содовая, Лайм, Мята, Сахар",
+                description: "Кубинская легенда: свежая мята, лайм, белый ром и газированная вода для идеального летнего напитка.",
+                glass: "Хайбол",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "IBA"
+            },
+            {
+                id: 4,
+                name: "Олд Фэшн",
+                category: "strong",
+                type: "classic",
+                ingredients: "Бурбон, Ангостура, Сахар, Апельсин",
+                description: "Абсолютная классика. Бурбон, подслащенный сахаром и ароматизированный биттерами, с нотой апельсина.",
+                glass: "Старый фэшн",
+                strength: "Высокая",
+                image: "https://images.unsplash.com/photo-1514361892636-6d4d7f5e7b9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Классика"
+            },
+            {
+                id: 5,
+                name: "Московский Мул",
+                category: "refreshing",
+                type: "modern",
+                ingredients: "Водка, Имбирное пиво, Сок лайма",
+                description: "Пряный, имбирный и освежающий. Водка, имбирное пиво и сок лайма в iconic медной кружке.",
+                glass: "Медная кружка",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 6,
+                name: "Эспрессо Мартини",
+                category: "coffee",
+                type: "modern",
+                ingredients: "Водка, Кофейный ликёр, Эспрессо",
+                description: "Идеальный послеобеденный коктейль. Бодрящий эспрессо, водка и кофейный ликёр с кремовой пенкой.",
+                glass: "Коктейльный",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 7,
+                name: "Пина Колада",
+                category: "sweet",
+                type: "iba",
+                ingredients: "Белый ром, Кокосовый крем, Ананасовый сок",
+                description: "Тропический коктейль с кремовой текстурой и сладким вкусом ананаса и кокоса.",
+                glass: "Хайбол",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "IBA"
+            },
+            {
+                id: 8,
+                name: "Космополитен",
+                category: "sour",
+                type: "modern",
+                ingredients: "Водка, Трипл-сек, Клюквенный сок, Сок лайма",
+                description: "Элегантный розовый коктейль с балансом сладости и кислотности, популяризированный сериалом 'Секс в большом городе'.",
+                glass: "Мартини",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 9,
+                name: "Май Тай",
+                category: "strong",
+                type: "classic",
+                ingredients: "Выдержанный ром, Миндальный сироп, Сок лайма",
+                description: "Полинезийский коктейль с сложным вкусом рома, цитрусов и миндаля.",
+                glass: "Хайбол",
+                strength: "Высокая",
+                image: "https://images.unsplash.com/photo-1568103211857-76d5c9d7f8c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Классика"
+            },
+            {
+                id: 10,
+                name: "Апероль Шприц",
+                category: "refreshing",
+                type: "modern",
+                ingredients: "Апероль, Просекко, Содовая",
+                description: "Итальянский аперитив с горьковато-сладким вкусом апельсина и освежающими пузырьками просекко.",
+                glass: "Винный",
+                strength: "Низкая",
+                image: "https://images.unsplash.com/photo-1556855810-ac404aa91e85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 11,
+                name: "Мохито без алкоголя",
+                category: "refreshing",
+                type: "non-alcoholic",
+                ingredients: "Содовая, Лайм, Мята, Сахар, Имбирный эль",
+                description: "Освежающая безалкогольная версия классического Мохито с мятой, лаймом и имбирным элем.",
+                glass: "Хайбол",
+                strength: "Безалкогольный",
+                image: "https://images.unsplash.com/photo-1609951651556-5334e2706168?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Безалкогольный"
+            },
+            {
+                id: 12,
+                name: "Дайкири",
+                category: "sour",
+                type: "iba",
+                ingredients: "Белый ром, Сок лайма, Сахарный сироп",
+                description: "Классический кубинский коктейль с простыми, но идеально сбалансированными ингредиентами.",
+                glass: "Коктейльный",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1567103476910-6e5c8c57bf39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "IBA"
+            },
+            {
+                id: 13,
+                name: "Белый Русский",
+                category: "sweet",
+                type: "classic",
+                ingredients: "Водка, Кофейный ликёр, Сливки",
+                description: "Кремовый, сладкий коктейль с нотами кофе, популярный благодаря фильму 'Большой Лебовски'.",
+                glass: "Олд фэшн",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1544145945-1d9a8e1a82c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Классика"
+            },
+            {
+                id: 14,
+                name: "Кровавая Мэри",
+                category: "refreshing",
+                type: "iba",
+                ingredients: "Водка, Томатный сок, Лимонный сок, Ворчестерский соус, Табаско",
+                description: "Пряный томатный коктейль, который часто пьют как средство от похмелья или на бранче.",
+                glass: "Хайбол",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "IBA"
+            },
+            {
+                id: 15,
+                name: "Манхэттен",
+                category: "strong",
+                type: "classic",
+                ingredients: "Виски, Красный вермут, Ангостура",
+                description: "Элегантный коктейль, созданный в Нью-Йорке, с богатым вкусом виски и сладостью вермута.",
+                glass: "Мартини",
+                strength: "Высокая",
+                image: "https://images.unsplash.com/photo-1542849187-5ec6ea5e6a27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Классика"
+            },
+            {
+                id: 16,
+                name: "Мохито из клубники",
+                category: "sweet",
+                type: "modern",
+                ingredients: "Белый ром, Содовая, Лайм, Мята, Клубника, Сахар",
+                description: "Фруктовая вариация классического Мохито с добавлением свежей клубники для сладости и аромата.",
+                glass: "Хайбол",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1568564321586-871f4c01f4e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 17,
+                name: "Палома",
+                category: "refreshing",
+                type: "modern",
+                ingredients: "Текила, Грейпфрутовый сок, Содовая, Лайм",
+                description: "Популярный в Мексике коктейль с текилой и освежающим грейпфрутовым соком.",
+                glass: "Хайбол",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 18,
+                name: "Френч 75",
+                category: "refreshing",
+                type: "classic",
+                ingredients: "Джин, Лимонный сок, Сахарный сироп, Шампанское",
+                description: "Элегантный игристый коктейль, названный в честь французской пушки времен Первой мировой войны.",
+                glass: "Флюте",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Классика"
+            },
+            {
+                id: 19,
+                name: "Клубничный Дайкири",
+                category: "sweet",
+                type: "modern",
+                ingredients: "Белый ром, Сок лайма, Сахарный сироп, Клубника",
+                description: "Фруктовая версия классического Дайкири с добавлением свежей клубники для сладости и цвета.",
+                glass: "Коктейльный",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Современный"
+            },
+            {
+                id: 20,
+                name: "Ирландский кофе",
+                category: "coffee",
+                type: "classic",
+                ingredients: "Ирландский виски, Кофе, Сахар, Сливки",
+                description: "Согревающий коктейль на основе кофе и виски, увенчанный слоем густых сливок.",
+                glass: "Айриш кофе",
+                strength: "Средняя",
+                image: "https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                badge: "Классика"
+            }
+        ];
+
+        // DOM элементы
+        const cocktailGrid = document.getElementById('cocktailGrid');
+        const cocktailCount = document.getElementById('cocktailCount');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // Текущие фильтры
+        let currentFilters = {
+            search: '',
+            type: 'all',
+            category: 'all'
+        };
+
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCocktails(cocktails);
+            
+            // Обработчики событий для фильтров
+            searchInput.addEventListener('input', (e) => {
+                currentFilters.search = e.target.value.toLowerCase();
+                applyFilters();
+            });
+            
+            categoryFilter.addEventListener('change', (e) => {
+                currentFilters.category = e.target.value;
+                applyFilters();
+            });
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Убираем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс нажатой кнопке
+                    button.classList.add('active');
+                    // Устанавливаем фильтр по типу
+                    currentFilters.type = button.getAttribute('data-filter');
+                    applyFilters();
+                });
+            });
+        });
+
+        // Функция для отображения коктейлей
+        function renderCocktails(cocktailsToRender) {
+            cocktailGrid.innerHTML = '';
+            
+            if (cocktailsToRender.length === 0) {
+                cocktailGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-glass-martini-alt"></i>
+                        <h3>Коктейли не найдены</h3>
+                        <p>Попробуйте изменить параметры поиска или фильтры, чтобы найти подходящий коктейль.</p>
+                    </div>
+                `;
+                cocktailCount.textContent = `Показано: 0 из ${cocktails.length} коктейлей`;
+                return;
+            }
+            
+            cocktailsToRender.forEach(cocktail => {
+                const card = document.createElement('article');
+                card.className = 'cocktail-card';
+                card.setAttribute('data-id', cocktail.id);
+                card.setAttribute('data-type', cocktail.type);
+                card.setAttribute('data-category', cocktail.category);
+                
+                // Определяем цвет категории
+                let categoryText = '';
+                switch(cocktail.category) {
+                    case 'strong': categoryText = 'Крепкий'; break;
+                    case 'refreshing': categoryText = 'Освежающий'; break;
+                    case 'sweet': categoryText = 'Сладкий'; break;
+                    case 'sour': categoryText = 'Кислый'; break;
+                    case 'coffee': categoryText = 'Кофейный'; break;
+                    case 'non-alcoholic': categoryText = 'Безалкогольный'; break;
+                    default: categoryText = 'Другой';
+                }
+                
+                card.innerHTML = `
+                    <img src="${cocktail.image}" alt="${cocktail.name}" class="cocktail-img">
+                    <div class="cocktail-info">
+                        <div class="cocktail-header">
+                            <h3 class="cocktail-name">${cocktail.name}</h3>
+                            <span class="cocktail-badge">${cocktail.badge}</span>
+                        </div>
+                        <span class="cocktail-category">${categoryText}</span>
+                        <p class="cocktail-desc">${cocktail.description}</p>
+                        <p class="cocktail-ingredients"><strong>Основа:</strong> ${cocktail.ingredients}</p>
+                        <div class="cocktail-footer">
+                            <div class="cocktail-glass">
+                                <i class="fas fa-glass-whiskey"></i> ${cocktail.glass}
+                            </div>
+                            <div class="cocktail-strength">
+                                <i class="fas fa-tachometer-alt"></i> ${cocktail.strength}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                cocktailGrid.appendChild(card);
+            });
+            
+            cocktailCount.textContent = `Показано: ${cocktailsToRender.length} из ${cocktails.length} коктейлей`;
+        }
+
+        // Функция для применения фильтров
+        function applyFilters() {
+            let filteredCocktails = [...cocktails];
+            
+            // Фильтр по поиску
+            if (currentFilters.search) {
+                filteredCocktails = filteredCocktails.filter(cocktail => 
+                    cocktail.name.toLowerCase().includes(currentFilters.search) ||
+                    cocktail.ingredients.toLowerCase().includes(currentFilters.search) ||
+                    cocktail.description.toLowerCase().includes(currentFilters.search)
+                );
+            }
+            
+            // Фильтр по типу (iba, classic, modern)
+            if (currentFilters.type !== 'all') {
+                filteredCocktails = filteredCocktails.filter(cocktail => 
+                    cocktail.type === currentFilters.type
+                );
+            }
+            
+            // Фильтр по категории
+            if (currentFilters.category !== 'all') {
+                filteredCocktails = filteredCocktails.filter(cocktail => 
+                    cocktail.category === currentFilters.category
+                );
+            }
+            
+            renderCocktails(filteredCocktails);
+        }
+
+        // Выделение активного пункта меню
+        document.querySelectorAll('nav a').forEach(anchor => {
+            if (anchor.href === window.location.href) {
+                anchor.classList.add('active');
+            }
+            
+            anchor.addEventListener('click', function() {
+                document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        console.log("Страница со списком коктейлей загружена. Готово к фильтрации!");
+    </script>
+</body>
+</html>

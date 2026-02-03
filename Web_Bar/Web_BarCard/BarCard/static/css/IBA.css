@@ -1,0 +1,399 @@
+/* Сброс и базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    background-color: #0f1a20;
+    color: #f0f0f0;
+    line-height: 1.6;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+/* Шапка и навигация */
+header {
+    background-color: rgba(15, 26, 32, 0.95);
+    border-bottom: 1px solid #2a3b47;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4ECDC4;
+    display: flex;
+    align-items: center;
+}
+.logo i {
+    margin-right: 10px;
+}
+nav ul {
+    display: flex;
+    list-style: none;
+}
+nav ul li {
+    margin-left: 30px;
+}
+nav ul li a {
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 8px 5px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+nav ul li a:hover,
+nav ul li a.active {
+    color: #4ECDC4;
+    border-bottom: 2px solid #4ECDC4;
+}
+/* Герой-секция для IBA */
+.iba-hero {
+    background: linear-gradient(rgba(15, 26, 32, 0.85), rgba(15, 26, 32, 0.95)), url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+    text-align: center;
+}
+.iba-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+.iba-hero p {
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    color: #b0b0b0;
+}
+.iba-logo {
+    font-size: 2rem;
+    color: #FF6B6B;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+/* Навигация по категориям IBA */
+.iba-category-nav {
+    background-color: #131f26;
+    padding: 20px 0;
+    position: sticky;
+    top: 70px;
+    z-index: 900;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.category-tab {
+    background-color: #1a2b35;
+    color: #b0b0b0;
+    padding: 14px 30px;
+    border-radius: 50px;
+    border: 2px solid transparent;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+.category-tab:hover {
+    background-color: #2a3b47;
+    color: #fff;
+}
+.category-tab.active {
+    background-color: #4ECDC4;
+    color: #0f1a20;
+    border-color: #4ECDC4;
+}
+.category-tab i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+/* Секции категорий IBA */
+.category-section {
+    padding: 80px 0 40px;
+}
+.category-section.hidden {
+    display: none;
+}
+.category-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.category-title {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+}
+.category-title:after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 4px;
+    background-color: #FF6B6B;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.category-subtitle {
+    font-size: 1.2rem;
+    color: #b0b0b0;
+    max-width: 700px;
+    margin: 25px auto 0;
+}
+.cocktail-count {
+    text-align: center;
+    color: #8a9ba8;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+.cocktail-count span {
+    color: #4ECDC4;
+    font-weight: 700;
+}
+/* Сетка коктейлей */
+.cocktail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 40px;
+}
+/* Карточка коктейля IBA */
+.cocktail-card {
+    background-color: #1a2b35;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.cocktail-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+.cocktail-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+.cocktail-info {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.cocktail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+.cocktail-name {
+    font-size: 1.6rem;
+    color: #fff;
+    margin-right: 10px;
+}
+.cocktail-badge {
+    background-color: #FF6B6B;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.cocktail-category {
+    display: inline-block;
+    background-color: #2a3b47;
+    color: #4ECDC4;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    align-self: flex-start;
+}
+.cocktail-desc {
+    color: #b0b0b0;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    flex-grow: 1;
+}
+.cocktail-ingredients {
+    font-size: 0.95rem;
+    color: #8a9ba8;
+    margin-bottom: 20px;
+}
+.cocktail-ingredients strong {
+    color: #fff;
+}
+.cocktail-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #2a3b47;
+}
+.cocktail-glass {
+    color: #8a9ba8;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+.cocktail-glass i {
+    margin-right: 8px;
+    color: #4ECDC4;
+}
+.cocktail-strength {
+    color: #8a9ba8;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+.cocktail-strength i {
+    margin-right: 8px;
+    color: #FF6B6B;
+}
+/* Информация о IBA */
+.iba-info {
+    background-color: #1a2b35;
+    border-radius: 12px;
+    padding: 40px;
+    margin: 60px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.iba-info h2 {
+    font-size: 2rem;
+    color: #4ECDC4;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.iba-info p {
+    color: #b0b0b0;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+.iba-info .highlight {
+    color: #FF6B6B;
+    font-weight: 700;
+}
+/* Подвал */
+footer {
+    background-color: #0a1419;
+    padding: 50px 0 20px;
+    text-align: center;
+}
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer-logo {
+    font-size: 2rem;
+    color: #4ECDC4;
+    margin-bottom: 20px;
+}
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.footer-links a {
+    margin: 0 15px 10px;
+    color: #b0b0b0;
+    transition: color 0.3s ease;
+}
+.footer-links a:hover {
+    color: #4ECDC4;
+}
+.social-icons {
+    margin-bottom: 30px;
+}
+.social-icons a {
+    display: inline-block;
+    background-color: #2a3b47;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    margin: 0 8px;
+    transition: background-color 0.3s ease;
+}
+.social-icons a:hover {
+    background-color: #4ECDC4;
+}
+.copyright {
+    color: #6c7d8a;
+    font-size: 0.9rem;
+    border-top: 1px solid #2a3b47;
+    padding-top: 20px;
+    width: 100%;
+}
+/* Адаптивность */
+@media (max-width: 992px) {
+    .cocktail-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+}
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav ul {
+        margin-top: 15px;
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 0 10px;
+    }
+    .iba-hero h1 {
+        font-size: 2.5rem;
+    }
+    .iba-hero p {
+        font-size: 1.1rem;
+    }
+    .category-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    .category-tab {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    .cocktail-grid {
+        grid-template-columns: 1fr;
+    }
+    .category-title {
+        font-size: 2.2rem;
+    }
+}
