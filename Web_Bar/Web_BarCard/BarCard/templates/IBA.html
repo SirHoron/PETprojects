@@ -2,7 +2,8 @@
 {% load static %}
 <html lang="ru">
     <head>
-        <link rel="stylesheet" href="{% static 'css/IBA.css' %}">
+        <link rel="stylesheet" href="{% static "css/IBA.css" %}">
+        <link rel="stylesheet" href="{% static "css/Base.css" %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         <title>Мир Коктейлей | Официальные коктейли IBA</title>
@@ -10,21 +11,7 @@
     </head>
         <body>
         <!-- Шапка с навигацией -->
-        <header>
-            <div class="container header-container">
-                <a href="http://127.0.0.1:8000" class="logo">
-                    <i class="fas fa-cocktail"></i> Мир Коктейлей
-                </a>
-                <nav>
-                    <ul>
-                        <li><a href="http://127.0.0.1:8000" class="active"><i class="fas fa-home"></i> Главная</a></li>
-                        <li><a href="http://127.0.0.1:8000/list/IBA"><i class="fas fa-list"></i> Список IBA</a></li>
-                        <li><a href="http://127.0.0.1:8000/list"><i class="fas fa-list"></i> Список коктейлей</a></li>
-                        <li><a href="http://127.0.0.1:8000/contacts"><i class="fas fa-address-book"></i> Контакты</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        {% include "BaseHeader.html"  with main="deactive" IBA="active" only %}
     
         <!-- Герой-секция для IBA -->
         <section class="iba-hero">
@@ -112,21 +99,7 @@
         </section>
     
         <!-- Подвал -->
-        <footer>
-            <div class="container footer-content">
-                <div class="footer-logo">Мир Коктейлей</div>
-                <div class="footer-links">
-                    <a href="http://127.0.0.1:8000/list">Главная</a>
-                    <a href="http://127.0.0.1:8000/list/IBA">Список IBA</a>
-                    <a href="http://127.0.0.1:8000/contacts">Контакты</a>
-                    <a href="#">О нас</a>
-                </div>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-vk"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                </div>
-            </div>
-        </footer>
+        {% include "BaseFooter.html" %}
     
         <script>
             // Данные коктейлей IBA по категориям

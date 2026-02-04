@@ -1,19 +1,10 @@
 from django.shortcuts import render
+from .models import CardCoctail
 
+""" 
+ CardCoctail( name=, category=, type=, ingredients=, description=, glass=, strength=, image=, badge= )
+"""
 def main(request):
-    name, category, desc, ingr, scr = "","","","","",
-    topcoctail = f"""
-    <a href="http://127.0.0.1:8000/list/coctail/{id}">
-        <article class="cocktail-card">
-            <img src="{scr}" alt="{name}" class="cocktail-img">
-            <div class="cocktail-info">
-                <h3 class="cocktail-name">{name}</h3>
-                <span class="cocktail-category">{category}</span>
-                <p class="cocktail-desc">{desc}</p>
-                <p class="cocktail-ingredients"><strong>Основа:</strong>{ingr}</p>
-            </div>
-        </article>
-    </a>"""
     return render(request, "main.html")
 
 def IBA(request):
@@ -27,3 +18,6 @@ def contacts(request):
 
 def list_coctails(request):
     return render(request, "list_coctail.html")
+
+def admin(request):
+    return render(request, "admin.html")

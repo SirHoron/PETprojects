@@ -2,12 +2,244 @@
 {% load static %}
 <html lang="ru">
     <head>
-        <link rel="stylesheet" href="{% static 'css/coctail.css' %}">
+        <link rel="stylesheet" href="{% static "css/coctail.css" %}">
+        <link rel="stylesheet" href="{% static "css/Base.css" %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         <title>Мир Коктейлей | Список коктейлей</title>
     </head>
     <body>
-        
+        <!-- Шапка с навигацией -->
+        {% include "BaseHeader.html" with main="deactive" IBA="deactive" list="active" only %}
+
+        <!-- Основной контент -->
+        <div class="container">
+            <!-- Герой-секция -->
+            <section class="cocktail-hero">
+                <div class="cocktail-header">
+                    <div>
+                        <h1 class="cocktail-title">Негрони</h1>
+                        <div class="cocktail-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-glass-whiskey"></i> Крепкий коктейль
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i> Приготовление: 3 минуты
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-tachometer-alt"></i> Крепость: 24% алкоголя
+                            </div>
+                        </div>
+                    </div>
+                    <span class="cocktail-badge iba">Официальный коктейль IBA</span>
+                </div>
+            </section>
+
+            <!-- Основной контент в две колонки -->
+            <div class="cocktail-content">
+                <!-- Левая колонка -->
+                <div class="cocktail-left">
+                    <img src="https://images.unsplash.com/photo-1585621386286-5c7c5d7c09f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                         alt="Негрони" 
+                         class="cocktail-image">
+
+                    <section class="history-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-history"></i> История коктейля
+                        </h2>
+                        <div class="history-text">
+                            <p>Негрони — один из самых знаменитых итальянских коктейлей, который был создан во Флоренции в 1919 году. Согласно легенде, граф Камилло Негрони заказал в баре Caffè Casoni свой любимый коктейль «Американо», но попросил сделать его покрепче, заменив содовую воду джином.</p>
+
+                            <p>Бармен Фоско Скарцелли исполнил просьбу графа и в качестве знака отличия от оригинала украсил коктейль долькой апельсина вместо традиционного лимона. Так родился классический Негрони, который быстро завоевал популярность среди местной аристократии.</p>
+
+                            <p>В 1940-х годах внук графа Негрони открыл в Флоренции бар «Негрони», который стал культовым местом для ценителей этого напитка. Сегодня Негрони входит в официальный список коктейлей Международной ассоциации барменов (IBA) и считается одним из самых совершенных коктейлей в мире.</p>
+
+                            <p>В 2013 году журнал Drinks International включил Негрони в топ-10 самых продаваемых коктейлей мира, где он занимает почетное место уже много лет подряд.</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Правая колонка -->
+                <div class="cocktail-right">
+                    <section class="ingredients-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-list-alt"></i> Ингредиенты и пропорции
+                        </h2>
+                        <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 1.1rem;">
+                            Классический рецепт Негрони основан на равных частях трех ингредиентов. На 1 порцию:
+                        </p>
+                        <ul class="ingredients-list">
+                            <li class="ingredient-item">
+                                <div class="ingredient-name">
+                                    <i class="fas fa-wine-bottle"></i> Лондонский сухой джин
+                                </div>
+                                <span class="ingredient-amount">30 мл</span>
+                            </li>
+                            <li class="ingredient-item">
+                                <div class="ingredient-name">
+                                    <i class="fas fa-wine-bottle"></i> Красный вермут (сладкий)
+                                </div>
+                                <span class="ingredient-amount">30 мл</span>
+                            </li>
+                            <li class="ingredient-item">
+                                <div class="ingredient-name">
+                                    <i class="fas fa-wine-bottle"></i> Кампари
+                                </div>
+                                <span class="ingredient-amount">30 мл</span>
+                            </li>
+                            <li class="ingredient-item">
+                                <div class="ingredient-name">
+                                    <i class="fas fa-lemon"></i> Апельсин (для гарнира)
+                                </div>
+                                <span class="ingredient-amount">1 долька</span>
+                            </li>
+                            <li class="ingredient-item">
+                                <div class="ingredient-name">
+                                    <i class="fas fa-cube"></i> Лед в кубиках
+                                </div>
+                                <span class="ingredient-amount">200 г</span>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="preparation-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-mortar-pestle"></i> Приготовление
+                        </h2>
+                        <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 1.1rem;">
+                            Негрони готовится методом Build (строительство) прямо в бокале. Следуйте этим шагам:
+                        </p>
+                        <ol class="steps-list">
+                            <li class="step-item">
+                                <p class="step-text">Возьмите бокал Old Fashioned (рокс) и наполните его крупными кубиками льда до краев.</p>
+                            </li>
+                            <li class="step-item">
+                                <p class="step-text">Налейте в бокал 30 мл лондонского сухого джина, стараясь равномерно распределить его по льду.</p>
+                            </li>
+                            <li class="step-item">
+                                <p class="step-text">Добавьте 30 мл красного вермута, аккуратно вливая его поверх джина.</p>
+                            </li>
+                            <li class="step-item">
+                                <p class="step-text">Завершите композицию 30 мл Кампари, который создаст характерный градиент цвета.</p>
+                            </li>
+                            <li class="step-item">
+                                <p class="step-text">Аккуратно перемешайте содержимое бокала барной ложкой в течение 15-20 секунд, чтобы охладить и смешать ингредиенты.</p>
+                            </li>
+                            <li class="step-item">
+                                <p class="step-text">Возьмите свежий апельсин, отрежьте дольку толщиной около 0,5 см, слегка сожмите ее над бокалом, чтобы выпустить масла, и опустите в коктейль.</p>
+                            </li>
+                            <li class="step-item">
+                                <p class="step-text">Подавайте немедленно, без соломинки. Наслаждайтесь гармоничным балансом сладости, горечи и крепости.</p>
+                            </li>
+                        </ol>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Характеристики коктейля -->
+            <section class="specs-section">
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-glass-whiskey"></i>
+                    </div>
+                    <div class="spec-content">
+                        <h3>Тип бокала</h3>
+                        <p>Old Fashioned (рокс), 300-350 мл</p>
+                    </div>
+                </div>
+
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="spec-content">
+                        <h3>Температура подачи</h3>
+                        <p>Очень холодный, 0-3°C</p>
+                    </div>
+                </div>
+
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="spec-content">
+                        <h3>Время приготовления</h3>
+                        <p>2-3 минуты</p>
+                    </div>
+                </div>
+
+                <div class="spec-card">
+                    <div class="spec-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="spec-content">
+                        <h3>Цвет</h3>
+                        <p>Глубокий рубиново-красный с оранжевыми отблесками</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Кнопки действий -->
+            <div class="action-buttons">
+                <button class="action-btn" id="shareBtn">
+                    <i class="fas fa-share-alt"></i> Поделиться рецептом
+                </button>
+                <button class="action-btn print" id="printBtn">
+                    <i class="fas fa-print"></i> Распечатать рецепт
+                </button>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        {% include "BaseFooter.html" %}
+
+        <script>
+            // Инициализация страницы
+            document.addEventListener('DOMContentLoaded', () => {
+                // Выделение активного пункта меню
+                document.querySelectorAll('nav a').forEach(anchor => {
+                    if (anchor.href === window.location.href) {
+                        anchor.classList.add('active');
+                    }
+
+                    anchor.addEventListener('click', function() {
+                        document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+
+                // Обработчики кнопок
+                document.getElementById('shareBtn').addEventListener('click', () => {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'Рецепт коктейля Негрони',
+                            text: 'Попробуйте классический итальянский коктейль Негрони!',
+                            url: window.location.href,
+                        })
+                        .then(() => console.log('Успешный шеринг'))
+                        .catch((error) => console.log('Ошибка шеринга:', error));
+                    } else {
+                        alert('Скопируйте ссылку на страницу из адресной строки браузера, чтобы поделиться рецептом!');
+                    }
+                });
+
+                document.getElementById('printBtn').addEventListener('click', () => {
+                    window.print();
+                });
+
+                // Анимация появления элементов при загрузке
+                const elements = document.querySelectorAll('.cocktail-hero, .cocktail-content, .specs-section, .action-buttons');
+                elements.forEach((el, index) => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+
+                    setTimeout(() => {
+                        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, 100 + (index * 100));
+                });
+            });
+        </script>
     </body>
 </html>
