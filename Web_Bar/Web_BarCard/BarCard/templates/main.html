@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static "css/main.css" %}">
-    <link rel="stylesheet" href="{% static "css/Base.css" %}">
+    <link rel="stylesheet" href="{% static "css\main.css" %}">
+    <link rel="stylesheet" href="{% static "css\Base.css" %}">
     <title>Мир Коктейлей | Главная</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -28,71 +28,9 @@
     <div class="container">
         <h2 class="section-title">Самые популярные коктейли</h2>
         <div class="cocktail-grid">
-            <!-- Коктейль 1 -->
-            <a href="http://127.0.0.1:8000/list/coctail">
-                <article class="cocktail-card">
-                    <img src="https://images.unsplash.com/photo-1585621386286-5c7c5d7c09f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Негрони" class="cocktail-img">
-                    <div class="cocktail-info">
-                        <h3 class="cocktail-name">Негрони</h3>
-                        <span class="cocktail-category">Крепкий</span>
-                        <p class="cocktail-desc">Идеальный баланс джина, вермута и кампари с горьковато-сладким вкусом и апельсиновой нотой.</p>
-                        <p class="cocktail-ingredients"><strong>Основа:</strong> Джин, Красный вермут, Кампари</p>
-                    </div>
-                </article>
-            </a>
-            
-            <!-- Коктейль 2 -->
-            <a href="">
-                <article class="cocktail-card">
-                    <img src="https://images.unsplash.com/photo-1551751299-1b51cab2694c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Маргарита" class="cocktail-img">
-                    <div class="cocktail-info">
-                        <h3 class="cocktail-name">Маргарита</h3>
-                        <span class="cocktail-category">Классика</span>
-                        <p class="cocktail-desc">Свежий, цитрусовый коктейль на основе текилы с кислинкой лайма и соленой окантовкой бокала.</p>
-                        <p class="cocktail-ingredients"><strong>Основа:</strong> Текила, Трипл-сек, Сок лайма</p>
-                    </div>
-                </article>
-            </a>
-            <!-- Коктейль 3 -->
-            <article class="cocktail-card">
-                <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Мохито" class="cocktail-img">
-                <div class="cocktail-info">
-                    <h3 class="cocktail-name">Мохито</h3>
-                    <span class="cocktail-category">Освежающий</span>
-                    <p class="cocktail-desc">Кубинская легенда: свежая мята, лайм, белый ром и газированная вода для идеального летнего напитка.</p>
-                    <p class="cocktail-ingredients"><strong>Основа:</strong> Белый ром, Содовая, Лайм, Мята, Сахар</p>
-                </div>
-            </article>
-            <!-- Коктейль 4 -->
-            <article class="cocktail-card">
-                <img src="https://images.unsplash.com/photo-1514361892636-6d4d7f5e7b9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Олд Фэшн" class="cocktail-img">
-                <div class="cocktail-info">
-                    <h3 class="cocktail-name">Олд Фэшн</h3>
-                    <span class="cocktail-category">Бурбон</span>
-                    <p class="cocktail-desc">Абсолютная классика. Бурбон, подслащенный сахаром и ароматизированный биттерами, с нотой апельсина.</p>
-                    <p class="cocktail-ingredients"><strong>Основа:</strong> Бурбон, Ангостура, Сахар, Апельсин</p>
-                </div>
-            </article>
-            <!-- Коктейль 5 -->
-            <article class="cocktail-card">
-                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Московский Мул" class="cocktail-img">
-                <div class="cocktail-info">
-                    <h3 class="cocktail-name">Московский Мул</h3>
-                    <span class="cocktail-category">Лёгкий</span>
-                    <p class="cocktail-desc">Пряный, имбирный и освежающий. Водка, имбирное пиво и сок лайма в iconic медной кружке.</p>
-                    <p class="cocktail-ingredients"><strong>Основа:</strong> Водка, Имбирное пиво, Сок лайма</p>
-                </div>
-            </article>
-            <!-- Коктейль 6 -->
-            <article class="cocktail-card">
-                <img src="https://images.unsplash.com/photo-1570595786995-1b80f6d6b8c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Эспрессо Мартини" class="cocktail-img">
-                <div class="cocktail-info">
-                    <h3 class="cocktail-name">Эспрессо Мартини</h3>
-                    <span class="cocktail-category">Кофейный</span>
-                    <p class="cocktail-desc">Идеальный послеобеденный коктейль. Бодрящий эспрессо, водка и кофейный ликёр с кремовой пенкой.</p>
-                    <p class="cocktail-ingredients"><strong>Основа:</strong> Водка, Кофейный ликёр, Эспрессо</p>
-                </div>
-            </article>
+            {% autoescape off %}
+            {{ coctails }}
+            {% endautoescape %}
         </div>
     </div>
 </section>
@@ -101,12 +39,10 @@
 {% include "BaseFooter.html" %}
 
 <script>
-    // Простой скрипт для плавной прокрутки и выделения активного пункта меню
+    // скрипт для плавной прокрутки и выделения активного пункта меню
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            // Убираем класс active у всех ссылок
             document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
-            // Добавляем класс active текущей ссылке
             this.classList.add('active');
         });
     });

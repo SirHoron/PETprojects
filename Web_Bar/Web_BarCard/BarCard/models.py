@@ -1,6 +1,6 @@
 from django.db import models
 
-class CardCoctail(models.Model):
+class For_Card_Coctail(models.Model):
     name = models.TextField()
     category = models.TextField()
     type = models.TextField()
@@ -10,7 +10,6 @@ class CardCoctail(models.Model):
     strength = models.CharField(max_length=8)
     strengthprocent = models.IntegerField()
     image = models.TextField()
-    badge = models.TextField()
     temperature = models.TextField()
     ctime = models.TextField()
     history = models.TextField()
