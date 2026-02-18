@@ -10,7 +10,7 @@ CardCoctail( name=, category=, type=, ingredients=, description=, glass=, streng
 
 def pages_block(count, page):
     answ = ''
-    for i in range(page, page+3 if count+2 >= page+3 else None):
+    for i in range(1 if page-3 != 1 else page-3, page+3 if count+2 >= page+3 else count+2):
         answ += \
         f"""<a href="http://127.0.0.1:8000/list/page-{i}/">
             <div class="block-page">
@@ -26,7 +26,7 @@ def card_form(data):
         answ = ingredients_handler(i["ingredients"].split("/"))
         data_answ += \
         f"""
-        <a href="http://127.0.0.1:8000/list/{i["name"]}/">
+        <a href="http://127.0.0.1:8000/list/coctail/{i["name"]}/">
             <article class="cocktail-card">
             <img src="" alt="{i['name']}" class="cocktail-img">
             <div class="cocktail-info">
@@ -62,7 +62,7 @@ def ingredients_handler(ingr):
 def main(request):
     data = For_Card_Coctail.objects.all()
     if len(data) >= 6:
-        data = data[:5]
+        data = data[:6]
     else:
         data = data[:len(data)]
 
@@ -70,11 +70,76 @@ def main(request):
 
     return render(request, "main.html", {"coctails": data_answ})
 
-def IBA(request):
-    return render(request, "IBA.html")
+def IBA(request: HttpRequest):
+    page = int(request.get_full_path().split("/")[2][5:])
+    desc = ''
+    unforg = ''
+    newera = ''
+    modern = ''
+    typec = ''
+    try:
+        type = request.GET["type"]
+        match type:
+            case "unforgettable":
+                desc = "Исторические классические коктейли, которые выдержали испытание временем и остаются популярными десятилетиями."
+                typec = "Незабываемые"
+                unforg = "active"
+            case "modern":
+                desc = "Коктейли, созданные в последние десятилетия, которые уже стали современной классикой и популярны во всем мире."
+                typec = "Современная классика"
+                modern = "active"
+            case "newepoch":
+                desc = "Новые и инновационные коктейли, отражающие современные тенденции в миксологии и технологии приготовления напитков."
+                typec = "Напитки новой эры"
+                newera = "active"
+    except KeyError:
+        return render(request, "error_page.html")
+    
+    data = For_Card_Coctail.objects.filter(category=type)
+    all_pages = len(data)//12
+    coctailscount = len(data)
+    if len(data) >= 12 and page != all_pages+1:
+        data = data[12*page-12:12*page]
+    else:
+        data = data[12*page-12:len(data)]
+    data_answ = card_form(data)
+
+    return render(request, "IBA.html", {"card": data_answ, "type": typec, "desc": desc,
+"count": coctailscount, "pages": pages_block(all_pages, page), "unforg": unforg, "newera": newera, "modern": modern})
 
 def coctail(request):
-    return render(request, "coctail.html")
+    ingr = ''
+    steps = ''
+    name = request.get_full_path().split("/")[3]
+    print(name)
+    data = For_Card_Coctail.objects.get(name=name).__dict__
+    ingredi = data["ingredients"].split("/")
+    for i in ingredi[:len(ingredi)-1]:
+        i = i.split(".")
+        print(i)
+        ingr += f"""
+    <li class="ingredient-item">
+        <div class="ingredient-name">
+            <i class="fas fa-wine-bottle"></i> {i[0]}
+        </div>
+        <span class="ingredient-amount">{i[1]} мл</span>
+    </li>
+    """
+    
+    data_step = data["cooking"].split(":")
+    if len(data_step) > 1:
+        run_steps = data_step[0]
+        for m in data_step[1].split(";"):
+            steps += f"""
+        <li class="step-item">
+            <p class="step-text">{m}.</p>
+        </li>
+        """
+    else:
+        run_steps = data_step[0]
+    return render(request, "coctail.html", {"name": data["name"], "strength": data["strength"], "strength_procent": data["strengthprocent"],
+    "time": f"{data["ctime"]}-{int(data["ctime"])+1}", "type": data["type"], "image": data["image"], "history": data["history"],
+    "ingr_list": ingr, "run_steps": run_steps, "steps": steps, "glass": data["glass"], "temperature": f"{data["temperature"]}-{int(data["temperature"])+3}"})
 
 def contacts(request):
     return render(request, "contacts.html")
@@ -84,13 +149,12 @@ def list_coctails(request: HttpRequest):
 
     data = For_Card_Coctail.objects.all()
     all_pages = len(data)//12
-    if len(data) >= 12:
-        data = data[1*page-1:12*page]
+    if len(data) >= 12 and page != all_pages+1:
+        data = data[12*page-12:12*page]
     else:
-        data = data[1*page-1:len(data)*page]
+        data = data[12*page-12:len(data)]
 
     data_answ = card_form(data)
-    print(data_answ)
 
     return render(request, "list_coctail.html", {"card": data_answ, "pages": pages_block(all_pages, page)})
 

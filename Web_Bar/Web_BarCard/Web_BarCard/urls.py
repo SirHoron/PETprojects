@@ -4,7 +4,7 @@ from BarCard.views import main, IBA, coctail, contacts, list_coctails, admin, er
 
 urlpatterns = [
     path("", main),
-    re_path(r"^IBA/$", IBA),
+    re_path(r"^IBA/page-\d+/$", IBA),
     re_path(r"^contacts/$", contacts),
     re_path(r"^list/page-\d+/$", list_coctails),
     re_path(r"^list/coctail/\D+/$", coctail),
