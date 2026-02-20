@@ -17,6 +17,13 @@
     color: #b0b0b0;
     font-size: 1.2rem;
 }
+
+div.action {
+    border-color: #0f1a20;
+    border-width: 3px;
+    border-style: solid;
+    display: none;
+}
 /* Основной контейнер админ-панели */
 .admin-container {
     display: grid;

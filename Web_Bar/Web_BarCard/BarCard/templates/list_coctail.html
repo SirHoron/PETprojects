@@ -26,28 +26,32 @@
         <div class="container">
             <div class="filters-container">
                 <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Поиск коктейля по названию или ингредиенту...">
+                    <i class="fas fa-search" id="search-btn"></i>
+                    <input type="text" id="searchInput" value="{{search}}" placeholder="Поиск коктейля по названию или ингредиенту...">
                 </div>
                 
-                <div class="filter-group">
-                    <button class="filter-btn active" data-filter="all">Все коктейли</button>
-                    <button class="filter-btn" data-filter="classic">Классика</button>
-                    <button class="filter-btn" data-filter="modern">Современные</button>
+                <div class="Filter">
+                    <button class="filter-select" id="toggleButton"><i class="fas fa-filter"></i>  {{typec}}  <i class="fas fa-chevron-down"></i></button>
                 </div>
-                
-                <select class="filter-select" id="categoryFilter">
-                    <option value="all">Все категории</option>
-                    <option value="strong">Крепкие</option>
-                    <option value="refreshing">Освежающие</option>
-                    <option value="sweet">Сладкие</option>
-                    <option value="sour">Кислые</option>
-                    <option value="coffee">Кофейные</option>
-                    <option value="non-alcoholic">Безалкогольные</option>
-                </select>
-            </div>
+                <div class="Filter">
+                    <a href="./?type=all&search="><button class="filter-select"><img src="/static/image/filter.png" alt="">  Сбросить фильтры</button></a>
+                </div>
+            </div> 
         </div>
     </section>
+    <div class="block-option" id="messageBlock">
+        <p><img src="/static/image/all.png" alt=""><a href="./?type=all&search={{search}}"> Все категории</a></p>
+        <p><img src="/static/image/Fish.png" alt=""><a href="./?type=tropical&search={{search}}"> Тропический</a></p>
+        <p><img src="/static/image/star.png" alt=""><a href="./?type=Unforgettable&search={{search}}"> Незабываемый</a></p>
+        <p><img src="/static/image/mint.png" alt=""><a href="./?type=refreshing&search={{search}}"> Освежающий</a></p>
+        <p><img src="/static/image/med.png" alt=""><a href="./?type=sweet&search={{search}}"> Сладкий</a></p>
+        <p><img src="/static/image/lemon.png" alt=""><a href="./?type=sour&search={{search}}"> Кислый</a></p>
+        <p> <img src="/static/image/coffee.png" alt=""> <a href="./?type=coffee&search={{search}}"> Кофейный</a></p>
+        <p> <img src="/static/image/non_alco.png" alt=""> <a href="./?type=non-alcoholic&search={{search}}"> Безалкогольный</a></p>
+        <p> <i class="fas fa-award"></i> <a href="./?type=modern&search={{search}}"> Современный</a></p>
+        <p> <i class="fas fa-rocket"></i> <a href="./?type=new-epoch&search={{search}}"> Новой эпохи</a></p>
+        <p> <img src="/static/image/karica.png" alt="./?type=spicy&search={{search}}"> <a href=""> Пряный</a></p>
+    </div>
 
     <!-- Секция коктейлей -->
     <section class="cocktails-section">
@@ -66,14 +70,34 @@
         {% autoescape off %}
         {{ pages }}
         {% endautoescape%}
-        <p class="continue no-select">...</p>
     </section>
 
     <!-- Подвал -->
     {% include "BaseFooter.html" %}
 
     <script>
-        
+        const button = document.getElementById('toggleButton');
+        const message = document.getElementById('messageBlock');
+        const searchBtn = document.getElementById('search-btn');
+        let searchInputText = document.getElementById("searchInput").value;
+
+        document.addEventListener('keydown', (e)=>{
+            let searchInput = document.getElementById("searchInput");
+            if (e.key=="Enter" && document.activeElement === searchInput && searchInput.value || searchInput.value != searchInputText && e.key=="Enter") {
+                const textContent = `type={{type}}&search=${searchInput.value}`
+                window.location.href = window.location.href.substring(0,35) + textContent
+            }
+        })
+
+        searchBtn.addEventListener('click', ()=>{
+            let searchInput = document.getElementById("searchInput");
+            const textContent = `type={{type}}&search=${searchInput.value}`
+            window.location.href = window.location.href.substring(0,35) + textContent
+        })
+
+        button.addEventListener('click', () => {
+            message.classList.toggle('show');
+        });
     </script>
 </body>
 </html>

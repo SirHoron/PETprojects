@@ -17,6 +17,8 @@
     margin: 0 auto 30px;
     color: #b0b0b0;
 }
+
+
 /* Секция фильтров */
 .filters-section {
     padding: 40px 0 20px;
@@ -79,25 +81,80 @@
     color: #0f1a20;
     border-color: #4ECDC4;
 }
-.filter-select {
-    background-color: #1a2b35;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 50px;
-    border: 2px solid #2a3b47;
-    font-weight: 600;
-    cursor: pointer;
-    min-width: 180px;
-}
-select.filter-select option{
-    padding-top: 2px;
-    background-color: #1a2b35;
-    border-radius: 50px;
-    border: 0px;
-}
+
+        .filter-select {
+            background-color: #1a2b35;
+            color: #fff;
+            font-size: 16px;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 2px solid #2a3b47;
+            font-weight: 600;
+            cursor: pointer;
+            min-width: 180px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .block-option {
+            text-align: left;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #1a2b35;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 15px;
+            border: 2px solid #2a3b47;
+            font-weight: 600;
+            cursor: pointer;
+            min-width: 180px;
+            max-width: 98%;
+
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 10px;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease-out, opacity 0.3s ease-out;
+            position: relative;
+            justify-self: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .block-option.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Дополнительно: делаем выезжающий текст заметным */
+        .block-option p {
+            margin-left: 30px;
+            margin-bottom: 5px;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        .block-option img {
+            height: 20px;
+            width: 20px;
+        }
+        .Filter img {
+            height: 16px;
+            width: 16px;
+        }
+
+        .filter-select:hover {
+            background-color: #263a46;
+            border: 2px solid #1a2b35;
+        }
+
+
 /* Секция коктейлей */
 .cocktails-section {
-    padding: 60px 0 80px;
+    padding: 0px 0 80px;
 }
 .section-title {
     text-align: center;
@@ -241,13 +298,12 @@ select.filter-select option{
     width: 50px;
     height: 50px;
     background-color: #2a3b47;
-    border-radius: 3px;
-    border-width: 2px;
-    border-color: #131f26;
+    border-radius: 25px;
+    border-width: 0px;
     color: wheat;
     text-align: center;
-    font-size: 35px;
-    padding: 0px;
+    font-size: 31px;
+    padding-top: 0px;
     margin-bottom: 10px;
     margin-right: 5px;
 }

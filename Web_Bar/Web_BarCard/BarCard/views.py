@@ -8,11 +8,31 @@ CardCoctail( name=, category=, type=, ingredients=, description=, glass=, streng
 
 """ Дополнительные функции """
 
-def pages_block(count, page):
+def searching(type, search):
+    data = []
+    if type != "all" or search != "none":
+        if search != "none" and type != "all":
+            answ = [*For_Card_Coctail.objects.filter(category=type, ingredients__icontains=search),
+                    *For_Card_Coctail.objects.filter(category=type, name=search)]
+            data += answ
+            return data
+        if search != "none":
+            answ = [*For_Card_Coctail.objects.filter(ingredients__icontains=search), *For_Card_Coctail.objects.filter(name=search)]
+            data += answ
+        if type != "all":
+            answ = [*For_Card_Coctail.objects.filter(category=type)]
+            data += answ
+        print(data)
+    else:
+        data = For_Card_Coctail.objects.all()
+    return data
+
+def pages_block(count, page, where="list", type='', search=''):
     answ = ''
     for i in range(1 if page-3 != 1 else page-3, page+3 if count+2 >= page+3 else count+2):
+
         answ += \
-        f"""<a href="http://127.0.0.1:8000/list/page-{i}/">
+        f"""<a href="http://127.0.0.1:8000/{where}/page-{i}/?type={type}&search={search}">
             <div class="block-page">
                 <p class="no-select">{i}</p>
             </div>
@@ -79,21 +99,22 @@ def IBA(request: HttpRequest):
     typec = ''
     try:
         type = request.GET["type"]
-        match type:
-            case "unforgettable":
-                desc = "Исторические классические коктейли, которые выдержали испытание временем и остаются популярными десятилетиями."
-                typec = "Незабываемые"
-                unforg = "active"
-            case "modern":
-                desc = "Коктейли, созданные в последние десятилетия, которые уже стали современной классикой и популярны во всем мире."
-                typec = "Современная классика"
-                modern = "active"
-            case "newepoch":
-                desc = "Новые и инновационные коктейли, отражающие современные тенденции в миксологии и технологии приготовления напитков."
-                typec = "Напитки новой эры"
-                newera = "active"
     except KeyError:
-        return render(request, "error_page.html")
+        type = "unforgettable"
+
+    match type:
+        case "unforgettable":
+            desc = "Исторические классические коктейли, которые выдержали испытание временем и остаются популярными десятилетиями."
+            typec = "Незабываемые"
+            unforg = "active"
+        case "modern":
+            desc = "Коктейли, созданные в последние десятилетия, которые уже стали современной классикой и популярны во всем мире."
+            typec = "Современная классика"
+            modern = "active"
+        case "newepoch":
+            desc = "Новые и инновационные коктейли, отражающие современные тенденции в миксологии и технологии приготовления напитков."
+            typec = "Напитки новой эры"
+            newera = "active"
     
     data = For_Card_Coctail.objects.filter(category=type)
     all_pages = len(data)//12
@@ -104,8 +125,8 @@ def IBA(request: HttpRequest):
         data = data[12*page-12:len(data)]
     data_answ = card_form(data)
 
-    return render(request, "IBA.html", {"card": data_answ, "type": typec, "desc": desc,
-"count": coctailscount, "pages": pages_block(all_pages, page), "unforg": unforg, "newera": newera, "modern": modern})
+    return render(request, "iba.html", {"card": data_answ, "type": typec, "desc": desc,
+"count": coctailscount, "pages": pages_block(all_pages, page, "IBA", type), "unforg": unforg, "newera": newera, "modern": modern})
 
 def coctail(request):
     ingr = ''
@@ -146,9 +167,38 @@ def contacts(request):
 
 def list_coctails(request: HttpRequest):
     page = int(request.get_full_path().split("/")[2][5:])
+    try:
+        type = request.GET["type"]
+        search = request.GET["search"]
+    except KeyError:
+        type = "all"
+        search = ""
+    typec = "Все категории"
+    match type:
+        case "Unforgettable":
+            typec = "Незабываемые" 
+        case "refreshing":
+            typec = "Освежающий"
+        case "sweet":
+            typec = "Сладкий"
+        case "sour":
+            typec = "Кислый"
+        case "coffee":
+            typec = "Кофейный"
+        case "non-alcoholic":
+            typec = "Безалкогольный"
+        case "modern":
+            typec = "Современный"
+        case "new-epoch":
+            typec = "Новой эпохи"
+        case "spicy":
+            typec = "Пряный"
+        case "tropical":
+            typec = "Тропический"
 
-    data = For_Card_Coctail.objects.all()
+    data = searching(type, "none" if not search else search)
     all_pages = len(data)//12
+
     if len(data) >= 12 and page != all_pages+1:
         data = data[12*page-12:12*page]
     else:
@@ -156,7 +206,7 @@ def list_coctails(request: HttpRequest):
 
     data_answ = card_form(data)
 
-    return render(request, "list_coctail.html", {"card": data_answ, "pages": pages_block(all_pages, page)})
+    return render(request, "list_coctail.html", {"card": data_answ, "pages": pages_block(all_pages, page, search=search, type=type), "search": search, "type": type, "typec": typec})
 
 def admin(request: HttpRequest):
     data = request.POST.dict()
