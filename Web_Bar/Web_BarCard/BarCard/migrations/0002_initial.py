@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('ingredients', models.TextField()),
                 ('description', models.TextField()),
                 ('glass', models.TextField()),
-                ('strength', models.CharField(max_length=8)),
+                ('strength', models.TextField()),
                 ('strengthprocent', models.IntegerField()),
                 ('image', models.TextField()),
                 ('temperature', models.TextField()),

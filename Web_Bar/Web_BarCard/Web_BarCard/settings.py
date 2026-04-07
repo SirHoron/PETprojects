@@ -70,16 +70,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Web_BarCard.wsgi.application'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'HOST': "127.0.0.1",
-        'PORT': 53213,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'WebBar',
+        'USER': 'django_user',
+        'PASSWORD': '4628159357Ss',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'CONN_MAX_AGE': 600,
     }
 }
 
