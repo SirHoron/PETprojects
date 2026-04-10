@@ -38,22 +38,22 @@ class Cocktail:
     def __repr__(self):
         return f"Cocktail('{self.name}', category='{self.category}')"
 
-def FCC_To_Coctail(*ar: For_Card_Coctail) -> list[Cocktail]:
+def FCC_To_Coctail(*ar: For_Card_Coctail|dict) -> list[Cocktail]:
     if ar:
         coctails_list = []
         for FCC in ar:
             if type(FCC) == For_Card_Coctail:
                 ingrs = []
-                for i in FCC.ingredients.split(";"):
-                    for n in range(0, len(i)-1, 2):
-                        ingrs.append(Ingredient(i[n], i[n+1]))
+                ingr = FCC.ingredients.split(";")
+                for i in range(0, len(ingr)-1, 2):
+                    ingrs.append(Ingredient(ingr[i], ingr[i+1]))
                 coctails_list.append(Cocktail(FCC.name, FCC.category, FCC.type, ingrs, FCC.description,
                 FCC.glass, FCC.strength, FCC.strengthprocent, FCC.image, FCC.temperature, FCC.ctime, FCC.history, FCC.cooking.split(";")))
             elif type(FCC) == dict:
                 ingrs = []
-                for i in FCC["ingredients"].split(";"):
-                    for n in range(0, len(i)-1, 2):
-                        ingrs.append(Ingredient(i[n], i[n+1]))
+                ingr = FCC["ingredients"].split(";")
+                for i in range(0, len(ingr)-1, 2):
+                    ingrs.append(Ingredient(ingr[i],ingr[i+1]))
                 coctails_list.append(Cocktail(FCC["name"], FCC['category'], FCC['type'], ingrs, FCC['description'],
                 FCC['glass'], FCC['strength'], FCC['strengthprocent'], FCC['image'], FCC['temperature'], FCC['ctime'], FCC['history'], FCC['cooking'].split(";")))
         return coctails_list
@@ -122,19 +122,19 @@ def _parse_cocktails(xml_file: str, limit: int = 6) -> list[Cocktail]:
 
     return cocktails
 
-def searching(type, search) -> list[Cocktail|None]:
+
+def searching(type_, search) -> list[Cocktail|None]:
     data = []
-    if type != "all" or search != "none":
-        if search != "none" and type != "all":
-            answ = [*For_Card_Coctail.objects.filter(category=type, ingredients__icontains=search),
-                    *For_Card_Coctail.objects.filter(category=type, name=search)]
+    if type_ != "Все категории" or search != "none":
+        if search != "none" and type_ != "Все категории":
+            answ = [*For_Card_Coctail.objects.filter(category=type_, ingredients__icontains=search),
+                    *For_Card_Coctail.objects.filter(category=type_, name__icontains=search)]
             data += answ
-            return data
-        if search != "none":
-            answ = [*For_Card_Coctail.objects.filter(ingredients__icontains=search), *For_Card_Coctail.objects.filter(name=search)]
+        elif search != "none":
+            answ = [*For_Card_Coctail.objects.filter(ingredients__icontains=search), *For_Card_Coctail.objects.filter(name__icontains=search)]
             data += answ
-        if type != "all":
-            answ = [*For_Card_Coctail.objects.filter(category=type)]
+        elif type_ != "Все категории":
+            answ = [*For_Card_Coctail.objects.filter(category=type_)]
             data += answ
     else:
         data = For_Card_Coctail.objects.all()
@@ -147,12 +147,14 @@ def FindName(name) -> Cocktail:
     data = redis_client.hgetall(name)
     if not data:
         try:
-            data = For_Card_Coctail.objects.get(name=name)
-            redis_client.hset(data.name, mapping=data.__dict__)
+            data = For_Card_Coctail.objects.filter(name=name)[0]
+            redis_client.hset(data.name, mapping=dict((k, v) for k, v in data.__dict__.items() if k != '_state'))
             redis_client.expire(data.name, 600)
             return FCC_To_Coctail(data)[0]
-        except:
+        except Exception as e:
+            print(e)
             return None
+    data = dict((k.decode(), v.decode()) for k, v in data.items())
     return FCC_To_Coctail(data)[0]
 
 def CreateCoctail(ingr, **data) -> bool:
@@ -163,11 +165,11 @@ def CreateCoctail(ingr, **data) -> bool:
     redis_client.expire(data["name"], 600)
     return True
 
-def FindCategory(category: str, page: int, count: int|None = None) -> tuple[list[Cocktail|None], int, int]:
+def FindCategory(category: str, page: int, count: int = 12) -> tuple[list[Cocktail|None], int, int]:
     data = For_Card_Coctail.objects.filter(category=category)
     if data:
         lendata = len(data)
-        pagescount = len(data)//12
+        pagescount = len(data)//count
         if len(data) >= count and page != pagescount+1:
             data = data[count*page-count:count*page]
         else:

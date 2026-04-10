@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мир Коктейлей | Список коктейлей</title>
     <link rel="stylesheet" href="{% static "css/list_coctail.css" %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" />
     <link rel="stylesheet" href="{% static "css/Base.css" %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -38,19 +39,20 @@
                 </div>
             </div> 
         </div>
-    </section>
+    </section> <!--Незабываемый, Освежающий, Сладкий, Кислый, Кофейный, Безалкогольный, Современный, Новой эпохи, Пряный, Травянистый, Цитрусовый-->
     <div class="block-option" id="messageBlock">
-        <p><img src="/static/image/all.png" alt=""><a href="./?type=all&search={{search}}"> Все категории</a></p>
-        <p><img src="/static/image/Fish.png" alt=""><a href="./?type=tropical&search={{search}}"> Тропический</a></p>
-        <p><img src="/static/image/star.png" alt=""><a href="./?type=Unforgettable&search={{search}}"> Незабываемый</a></p>
-        <p><img src="/static/image/mint.png" alt=""><a href="./?type=refreshing&search={{search}}"> Освежающий</a></p>
-        <p><img src="/static/image/med.png" alt=""><a href="./?type=sweet&search={{search}}"> Сладкий</a></p>
-        <p><img src="/static/image/lemon.png" alt=""><a href="./?type=sour&search={{search}}"> Кислый</a></p>
-        <p> <img src="/static/image/coffee.png" alt=""> <a href="./?type=coffee&search={{search}}"> Кофейный</a></p>
-        <p> <img src="/static/image/non_alco.png" alt=""> <a href="./?type=non-alcoholic&search={{search}}"> Безалкогольный</a></p>
-        <p> <i class="fas fa-award"></i> <a href="./?type=modern&search={{search}}"> Современный</a></p>
-        <p> <i class="fas fa-rocket"></i> <a href="./?type=new-epoch&search={{search}}"> Новой эпохи</a></p>
-        <p> <img src="/static/image/karica.png" alt="./?type=spicy&search={{search}}"> <a href=""> Пряный</a></p>
+        <p><img src="/static/image/all.png" alt=""><a href="../page-1/?type=all&search={{search}}"> Все категории</a></p>
+        <p><img src="/static/image/star.png" alt=""><a href="../page-1/?type=Unforgettable&search={{search}}"> Незабываемый</a></p>
+        <p><img src="/static/image/mint.png" alt=""><a href="../page-1/?type=refreshing&search={{search}}"> Освежающий</a></p>
+        <p><img src="/static/image/med.png" alt=""><a href="../page-1/?type=sweet&search={{search}}"> Сладкий</a></p>
+        <p><img src="/static/image/lemon.png" alt=""><a href="../page-1/?type=sour&search={{search}}"> Кислый</a></p>
+        <p> <img src="/static/image/coffee.png" alt=""> <a href="../page-1/?type=coffee&search={{search}}"> Кофейный</a></p>
+        <p> <img src="/static/image/non_alco.png" alt=""> <a href="../page-1/?type=non-alcoholic&search={{search}}"> Безалкогольный</a></p>
+        <p> <i class="fas fa-award"></i> <a href="../page-1/?type=modern&search={{search}}"> Современный</a></p>
+        <p> <i class="fas fa-rocket"></i> <a href="../page-1/?type=new-epoch&search={{search}}"> Новой эпохи</a></p>
+        <p> <img src="/static/image/karica.png" alt=""> <a href="../page-1/?type=spicy&search={{search}}"> Пряный</a></p>
+        <p> <img src="" alt=""> <a href="../page-1/?type=grassy&search={{search}}"> Травянистый</a></p>
+        <p> <img src="" alt=""> <a href="../page-1/?type=citrus&search={{search}}"> Цитрусовый</a></p>
     </div>
 
     <!-- Секция коктейлей -->

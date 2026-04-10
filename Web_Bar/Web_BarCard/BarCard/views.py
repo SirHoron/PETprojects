@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from .services import CreateCoctail, FindCategory, FindName, MostPopular, searching, Ingredient
 from .markingformer import cardformer, pages_block, CookingSteps, ingredients_steps
+from urllib.parse import unquote
 
 
-"""  Страницы  """
 def main(request):
     data = MostPopular()
     return render(request, "main.html", {"coctails": cardformer(data)})
@@ -24,25 +24,25 @@ def IBA(request: HttpRequest):
     match type:
         case "unforgettable":
             desc = "Исторические классические коктейли, которые выдержали испытание временем и остаются популярными десятилетиями."
-            typec = "Незабываемые"
+            typec = "Незабываемый"
             unforg = "active"
         case "modern":
             desc = "Коктейли, созданные в последние десятилетия, которые уже стали современной классикой и популярны во всем мире."
-            typec = "Современная классика"
+            typec = "Современный"
             modern = "active"
         case "newepoch":
             desc = "Новые и инновационные коктейли, отражающие современные тенденции в миксологии и технологии приготовления напитков."
-            typec = "Напитки новой эры"
+            typec = "Новой эпохи"
             newera = "active"
     
-    data, coctailscount, all_pages = FindCategory(typec, 12)
+    data, coctailscount, all_pages = FindCategory(typec, page, 12)
     data_answ = cardformer(data)
 
     return render(request, "iba.html", {"card": data_answ, "type": typec, "desc": desc,
 "count": coctailscount, "pages": pages_block(all_pages, page, "IBA", type), "unforg": unforg, "newera": newera, "modern": modern})
 
 def coctail(request):
-    name = request.get_full_path().split("/")[3]
+    name = unquote(request.path.split("/")[3])
     data = FindName(name)
     if data:
         ingr = ingredients_steps(data)
@@ -60,13 +60,13 @@ def contacts(request):
 def list_coctails(request: HttpRequest):
     page = int(request.get_full_path().split("/")[2][5:])
     try:
-        type = request.GET["type"]
-        search = request.GET["search"]
+        type_ = unquote(request.GET["type"])
+        search = unquote(request.GET["search"])
     except KeyError:
-        type = "all"
+        type_ = "all"
         search = ""
     typec = "Все категории"
-    match type:
+    match type_:
         case "Unforgettable":
             typec = "Незабываемые" 
         case "refreshing":
@@ -85,10 +85,14 @@ def list_coctails(request: HttpRequest):
             typec = "Новой эпохи"
         case "spicy":
             typec = "Пряный"
-        case "tropical":
-            typec = "Тропический"
+        case 'grassy':
+            typec = "Травянистый"
+        case 'citrus':
+            typec = "Цитрусовый"
+        case "":
+            type_ = "all"
 
-    data = searching(type, "none" if not search else search)
+    data = searching(typec, "none" if not search else search)
     all_pages = len(data)//12
 
     if len(data) >= 12 and page != all_pages+1:
@@ -98,11 +102,10 @@ def list_coctails(request: HttpRequest):
 
     data_answ = cardformer(data)
 
-    return render(request, "list_coctail.html", {"card": data_answ, "pages": pages_block(all_pages, page, search=search, type=type), "search": search, "type": type, "typec": typec})
+    return render(request, "list_coctail.html", {"card": data_answ, "pages": pages_block(all_pages, page, search=search, type_=type_), "search": search, "type": type_, "typec": typec})
 
 def admin(request: HttpRequest):
     data = request.POST.dict()
-
     if len(data) > 1:
         ingr = []
         datalistkey = [*data.keys()]

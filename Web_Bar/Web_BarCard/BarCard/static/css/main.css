@@ -1,6 +1,6 @@
 /* Герой-секция */
 .hero {
-    background: linear-gradient(rgba(15, 26, 32, 0.8), rgba(15, 26, 32, 0.9)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+    background: linear-gradient(rgba(15, 26, 32, 0.8), rgba(15, 26, 32, 0.9)), url("static/image_coctails/Logo_main.jpg");
     background-size: cover;
     background-position: center;
     padding: 80px 0;

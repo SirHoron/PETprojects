@@ -5,7 +5,7 @@ def cardformer(data: list[Cocktail]) -> str:
     for i in data:
         ingr = ''
         for n in i.ingredients:
-            ingr += n.name + " "
+            ingr += n.name + "," + " "
         data_answ += \
         f"""
         <a href="http://127.0.0.1:8000/list/coctail/{i.name}/">
@@ -18,7 +18,7 @@ def cardformer(data: list[Cocktail]) -> str:
                 </div>
                 <span class="cocktail-category">{i.category}</span>
                 <p class="cocktail-desc">{i.description}</p>
-                <p class="cocktail-ingredients"><strong>Основа:</strong>{ingr}</p>
+                <p class="cocktail-ingredients"><strong>Основа:</strong> {ingr[:len(ingr)-2]}</p>
                 <div class="cocktail-footer">
                     <div class="cocktail-glass">
                         <i class="fas fa-glass-whiskey"></i>{i.glass}
@@ -31,12 +31,12 @@ def cardformer(data: list[Cocktail]) -> str:
         </a>"""
     return data_answ
 
-def pages_block(count, page, where="list", type='', search='') -> str:
+def pages_block(count, page, where="list", type_='', search='') -> str:
     answ = ''
     for i in range(1 if page-3 != 1 else page-3, page+3 if count+2 >= page+3 else count+2):
 
         answ += \
-        f"""<a href="http://127.0.0.1:8000/{where}/page-{i}/?type={type}&search={search}">
+        f"""<a href="http://127.0.0.1:8000/{where}/page-{i}/?type={type_}&search={search}">
             <div class="block-page">
                 <p class="no-select">{i}</p>
             </div>
