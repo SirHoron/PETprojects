@@ -49,7 +49,7 @@ class HTMLRequest():
             response = self.header.encode() + f"{len(file)}\r\n\r\n".encode() + file
             return response
         else:
-            if exception
+            if exception:
                 return exception()
             else:
                 return HTTPException().Not_Found()
