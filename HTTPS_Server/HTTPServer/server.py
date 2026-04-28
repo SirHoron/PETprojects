@@ -7,7 +7,7 @@ from .HttpParser.parser import HTTPParser
 import re
 
 def _favicon(req):
-    return HTMLRequest(mime=MIME_TYPES[".ico"]).FileResponse(f'{request.path}', _HTTPException().Not_Found_Favicon)
+    return HTMLRequest(mime=MIME_TYPES[".ico"]).FileResponse(f'{req.path}', _HTTPException().Not_Found_Favicon)
 
 def _static(request):
     return HTMLRequest(mime=MIME_TYPES[".css"]).FileResponse(f'{request.path}')
